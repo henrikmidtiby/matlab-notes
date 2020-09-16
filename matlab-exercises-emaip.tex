@@ -68,6 +68,129 @@
 \tableofcontents
 
 \newpage
+\section*{Introduction}
+
+These notes are used in the course \emph{Mathematics and Introduction to programming}
+that is taught on University of Southern Denmark during fall 2019.
+
+The source for this document is available on github, 
+\url{https://github.com/henrikmidtiby/matlab-notes}.
+
+
+
+\section{Setting git up on Windows}
+
+In this section it is explained how to set up git on 
+a Windows computer.
+This is also described in this \href{https://tekvideo.sdu.dk/t/henrikmidtiby/E-MAIP-2020/2020/1/blok04/4}{video}.
+
+The steps are as follows:
+\begin{enumerate}
+\item		Download and install \emph{Git for Windows} from \url{https://git-scm.com/}
+\item		Open \emph{Git Bash} and identify yourself to git
+\item		Generate an ssh key
+\item 	Add the generated ssh key to \url{https://gitlab.sdu.dk}
+\end{enumerate}
+
+\subsection{Download and installation of \emph{Git for Windows}}
+
+Open \url{https://git-scm.com/} and click on the download button
+in the right side of the page.
+
+\subsection{Open Git Bash and identify yourself to git}
+
+Find the \emph{Git Bash} program and start it.
+It will look like a black image with some coloured text in the 
+top left corner.
+What is opened now is a computer console or terminal.
+It can be very effective to do certain tasks on the computer through the console.
+
+To set name and email that the git installation uses on the 
+computer, the following commands should be executed:
+\begin{verbatim}
+git config --global user.name "<your name>"
+git config --global user.email "<your email>"
+\end{verbatim}
+
+For me it looked like this:
+\begin{verbatim}
+hemi@TEK-CB-HEMI-01 MINGW64 ~
+$ git config --global user.name "Henrik Skov Midtiby"
+
+hemi@TEK-CB-HEMI-01 MINGW64 ~
+$ git config --global user.email "hemi@mmmi.sdu.dk"
+\end{verbatim}
+
+\subsection{Generate an ssh key}
+
+To work efficiently with git on remote servers like \url{https://gitlab.sdu.dk} or \url{https://github.com}, you need to generate 
+an ssh key.
+In Git Bash it is done with the command.
+\begin{verbatim}
+ssh-keygen -t rsa
+\end{verbatim}
+After executing the command, the \emph{ssh-keygen} program
+will ask you a few questions and then the ssh key is generated.
+It is appropriate to use the default values, so you can just 
+press enter to accept the default values.
+
+On my computer the key generation process looked like this:
+\begin{verbatim}
+hemi@TEK-CB-HEMI-01 MINGW64 ~
+$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/hemi/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/hemi/.ssh/id_rsa
+Your public key has been saved in /c/Users/hemi/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:GBdcG4YGzNMGF9bOZ5oK7P+m+IxO1+8hYpT2g3g/+Ok hemi@TEK-CB-HEMI-01
+The key's randomart image is:
++---[RSA 3072]----+
+|     oo===+      |
+|      +o*o.o     |
+|      .+.o.      |
+|       + .o o    |
+|     .. S  =     |
+|      o+ +o      |
+|     .o.*o= .    |
+|     ..Booo= .   |
+|     .+o=*Eoo    |
++----[SHA256]-----+
+\end{verbatim}
+
+\subsection{Add ssh key to gitlab.sdu.dk}
+
+As you have now generated an ssh key, you need to locate the 
+public part of the key and add that to \url{https://gitlab.sdu.dk}.
+This can be done with the following command.
+\begin{verbatim}
+cat <path to public key>
+\end{verbatim}
+
+On my computer the key is placed in this location 
+\verb!/c/Users/hemi/.ssh/id_rsa.pub!, which was displayed 
+in the output from the key generation step.
+
+\begin{verbatim}
+hemi@TEK-CB-HEMI-01 MINGW64 ~
+$ cat /c/Users/hemi/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCz0X6DyHeyiqcPe8Y+zeQ60Y
+4F0sxR2MqNlsL52ZrllRd0toAFvPvmrz9/rT13eHoD+xSIQ5kL44GTZqn9fRmC
+lG3ttc1v7Qd/KmAmM5eOpr+cH/c/IbfFGQyiRV7lRz5KES8TFUEs8YNLfLwdHU
+cEhmn7x4Zmc7aahTQFTH55EqOt6HU5YoF4vMe0LG+WnhNrh/kwiKN1ndqasEC6
+wE3D6K2/Z21j8FcFqvR0PWDubUABQdMN5+huQ7/O7SAVQCeZBYoG2fcn9HRu39
+IS8kKQ3AmmrDFUitaWhIWZ+msfmTqJCplYXVlGrlvjcbIVPIgCr/4IL6soWE1V
+KL1cEVGV2lAktMqP9cU1E6rYMFMtYIIyjSkE5l2YJZ++A+dgayHOqBx5qPXRq2
+k2gRAz8auiV0ztOCRtA09IhzvlH0ZHU126ZoxC72BJpMP6+Rp3r8EJ4LlU2IaI
+SXnoSAqXtc8HvngXm74TQpneLSDy+nMKZJ1jpL9dqxtWUM3DbhPyzaM= hemi@
+TEK-CB-HEMI-01
+\end{verbatim}
+
+
+
+
 \section{2019-09-09 Matlab introduction}
 \todo[inline]{Add Matlab introduction exercises}
 \todo[inline]{Add exercises about systems of linear equations}
