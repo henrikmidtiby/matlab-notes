@@ -1,0 +1,27 @@
+.gitignore.swp
+2019-11-25 Matlab exercises.pdf
+ans.log
+ans.tex
+ans1.tex
+exercises.aux
+exercises.log
+exercises.out
+exercises.pdf
+exercises.synctex.gz
+exercises.tdo
+experiments.aux
+experiments.log
+experiments.out
+experiments.pdf
+experiments.synctex.gz
+experiments.thm
+experiments.toc
+git-exercises/
+hints.tex
+matlab-exercises-emaip.aux
+matlab-exercises-emaip.log
+matlab-exercises-emaip.out
+matlab-exercises-emaip.pdf
+matlab-exercises-emaip.synctex.gz
+matlab-exercises-emaip.thm
+matlab-exercises-emaip.toc
