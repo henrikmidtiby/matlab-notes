@@ -194,11 +194,55 @@ TEK-CB-HEMI-01
 \end{verbatim}
 
 
+\subsection{Cloning a git repository}
+
+Open a command line / terminal in the location where you
+want to put a local copy of the git repository.
+This can be done by right clicking on the folder in 
+Pathfinder, Finder or Nautilus and selecting 
+\emph{Git BASH here}, \emph{Open terminal} or something similar.
+When the terminal is opened in the proper location, issue the 
+command below to clone the specified git repository.
+\begin{verbatim}
+git clone git@gitlab.sdu.dk:midtiby/2020-emaip/
+emaip-2020-exercises/emaip-exercises-studentid.git
+
+\end{verbatim}
 
 
-\section{2019-09-09 Matlab introduction}
+\subsection{Daily use of git}
+
+The recommended working routine with git is 
+described below.
+At start of the day, the goal is to get current
+with changes from other members of the team.
+This is achieved by the commands.
+\begin{verbatim}
+git fetch
+git rebase origin/master
+git push
+\end{verbatim}
+If git complains about not knowing which repository to push
+changes to, the following command will
+set it up.
+
+\begin{verbatim}
+git push --set-upstream origin master
+\end{verbatim}
+
+
+\section{Matlab introduction}
 \todo[inline]{Add Matlab introduction exercises}
 \todo[inline]{Add exercises about systems of linear equations}
+
+
+\subsection{Creating functions}
+
+\subsection{If statements}
+
+\subsection{For loops}
+
+\subsection{While loops}
 
 
 \subsection{Plot of functions}
@@ -604,7 +648,7 @@ A solution is:
 
 
 
-\begin{ex}\label{exfzero}
+\begin{ex}\label{exfzero}%
 Solve the equation $0 = 4 + x - x^2$ using the \verb!fzero! function.
 How many solutions would you expect to find? How many solutions do 
 you actually find?
@@ -670,7 +714,7 @@ A solution is:
 
 \begin{ex}
 Plot the two complex numbers $a = 4 + i$ and 
-$b = 2*e^{i \pi / 3}$ and their
+$b = 2 \cdot e^{i \pi / 3}$ and their
 product in the same Argand diagram.
 \begin{hint}
 \end{hint}
@@ -825,7 +869,469 @@ A solution is:
 
 
 
-\subsection{List exercises}
+\section{Matlab refresher}
+
+\begin{ex}
+A store want to implement a 10\% discount to customers 
+buying for 600 kr or more.
+Create a function that implements the discount calculation
+described above, the function must have the signature:
+\begin{lstlisting}
+function actual_price = apply_discount(ordinary_price)
+\end{lstlisting}
+Use the following examples to test the function.
+\begin{lstlisting}
+>> apply_discount(100)
+ans = 100
+>> apply_discount(600)
+ans = 540
+>> apply_discount(1000)
+ans = 900
+>> apply_discount(134)
+ans = 134
+\end{lstlisting}
+\begin{hint}
+Use an \verb!if! statement to choose whether the 
+discount should be applied or not.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function actual_price = apply_discount(ordinary_price)
+
+if(ordinary_price >= 600)
+    actual_price = 0.9*ordinary_price;
+else
+    actual_price = ordinary_price;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+\label{exCalcMean}%
+Create a function that calculates the mean value $\overline{x}$ of a list of numbers.
+\begin{align}
+\overline{x}
+	& = \frac{1}{N} \sum_{i = 1}^{N} x_i
+\end{align}
+The function signature should be:
+\begin{lstlisting}
+function mean_value = calcMean(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> calcMean([1]);
+>> calcMean([1])
+ans = 1
+>> calcMean([1, 3])
+ans = 2
+>> calcMean([-1, 7])
+ans = 3
+\end{lstlisting}
+\begin{hint}
+Use a for loop to sum all values.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function mean_value = calcMean(list)
+
+% Initialize counters
+total = 0;
+n_elements = 0;
+
+% Iterate over values in the list
+for value = list
+    total = total + value;
+    n_elements = n_elements + 1;
+end
+
+% Calculate the mean value
+mean_value = total / n_elements;
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+\label{exMinOfThree}%
+Create a function which takes three input arguments
+(assumed to be numerical values) and returns the 
+minimum value of the three input values.
+The function must have the signature:
+\begin{lstlisting}
+function minval = min_of_three(a, b, c)
+\end{lstlisting}
+Use the following examples to test the function.
+\begin{lstlisting}
+>> min_of_three(1, 2, 3)
+ans = 1
+>> min_of_three(100, 2, 3)
+ans = 2
+>> min_of_three(-1, 2, -3)
+ans = -3
+\end{lstlisting}
+\begin{hint}
+Use two \verb!if! statements to locate the minimal element.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function minval = min_of_three(a, b, c)
+
+minval = a;
+
+if(b < minval)
+    minval = b;
+end
+
+if(c < minval)
+    minval = c;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+\label{exThreeForThePriceOfTwo}%
+A store want to offer a buy three items and pay for two items 
+discount (the customer should pay for the two most 
+expensive items).
+Create a function that takes three input values (the price of the individual items) and returns the total price after taking 
+the discount into account.
+The function signature should be:
+\begin{lstlisting}
+function total_price = buy_three_pay_for_two(a, b, c)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> buy_three_pay_for_two(10, 20, 10)
+ans = 30
+>> buy_three_pay_for_two(10, 20, 30)
+ans = 50
+>> buy_three_pay_for_two(30, 20, 35)
+ans = 65
+\end{lstlisting}
+\begin{hint}
+The function \verb!min_of_tree! from exercise \ref{exMinOfThree} 
+can simplify the calculation.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function total_price = buy_three_pay_for_two(a, b, c)
+
+total_price = a + b + c - min_of_three(a, b, c);
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Rewrite the following function such that it uses a for loop.
+
+\begin{lstlisting}
+function functionThatRepeatsStuff()
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+end
+\end{lstlisting}
+\begin{hint}
+Identify what is repeated and how many times it is repeated.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function functionThatRepeatsStuff()
+for k = 1:8
+  disp(1);
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Rewrite the following function such that it uses a for loop.
+\begin{lstlisting}
+function functionThatCounts()
+disp(1);
+disp(2);
+disp(3);
+disp(4);
+disp(5);
+disp(6);
+disp(7);
+disp(8);
+disp(9);
+end
+\end{lstlisting}
+\begin{hint}
+Use a for loop, with a structure as shown here:
+\begin{lstlisting}
+for k = 1:4
+end
+\end{lstlisting}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function functionThatCounts()
+for k = 1:9
+  disp(k);
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Create \label{exSumOfPositiveIntegersLessThanN}
+a function that takes one positive integer, n, as argument and
+calculates the sum of all integers in the range $1, 2, ..., n$.
+The function signature should be:
+\begin{lstlisting}
+function res = sumOfIntegersLessThanOrEqualTo(n)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> sumOfIntegersLessThanOrEqualTo(1);
+>> sumOfIntegersLessThanOrEqualTo(1)
+ans = 1
+>> sumOfIntegersLessThanOrEqualTo(5)
+ans = 15
+>> sumOfIntegersLessThanOrEqualTo(10)
+ans = 55
+>> sumOfIntegersLessThanOrEqualTo(100)
+ans = 5050
+\end{lstlisting}
+\begin{hint}
+Use a for loop, with a structure as shown here:
+\begin{lstlisting}
+for k = 1:n
+end
+\end{lstlisting}
+Prior to the for loop, create a variable and set its value to 0.
+Then update the value in the variable for each cycle in the for loop.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = sumOfIntegersLessThanOrEqualTo(n)
+res = 0;
+for k = 1:n
+  res = res + k;
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+Create a function that takes one positive integer, n, as argument and
+calculates the sum of all integers in the range $1, 2, ..., n$, which are even.
+The function signature should be:
+\begin{lstlisting}
+function res = sumOfEvenIntegersLessThanOrEqualTo(n)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> sumOfEvenIntegersLessThanOrEqualTo(1);
+>> sumOfEvenIntegersLessThanOrEqualTo(1)
+ans = 0
+>> sumOfEvenIntegersLessThanOrEqualTo(5)
+ans = 6
+>> sumOfEvenIntegersLessThanOrEqualTo(10)
+ans = 30
+>> sumOfEvenIntegersLessThanOrEqualTo(100)
+ans = 2550
+\end{lstlisting}
+\begin{hint}
+Modify the solution to exercise \ref{exSumOfPositiveIntegersLessThanN}
+so it only increments the variable when $k$ is even.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = sumOfEvenIntegersLessThanOrEqualTo(n)
+res = 0;
+for k = 1:n
+  if(mod(k, 2) == 0)
+    res = res + k;
+  end
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+\label{exCalcSquaredMean}%
+Create a function that calculates the mean squared value $\overline{x^2}$ of a list of
+numbers.
+\begin{align}
+\overline{x^2}
+	& = \frac{1}{N} \sum_{i = 1}^{N} x_i^2
+\end{align}
+The function signature should be:
+\begin{lstlisting}
+function res = calcSquaredMean(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> calcSquaredMean([1]);
+>> calcSquaredMean([1])
+ans = 1
+>> calcSquaredMean([1, 3])
+ans = 5
+>> calcSquaredMean([-1, 7])
+ans = 25
+\end{lstlisting}
+\begin{hint}
+Use a for loop to sum the square of all values.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function mean_value = calcSquaredMean(list)
+
+% Initialize counters
+total = 0;
+n_elements = 0;
+
+% Iterate over values in the list
+for value = list
+    total = total + value^2;
+    n_elements = n_elements + 1;
+end
+
+% Calculate the mean value
+mean_value = total / n_elements;
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+Create a function, that takes a list a input and returns every third element from that list.
+The function signature should be:
+\begin{lstlisting}
+function res = return_every_third_element(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> return_every_third_element([1, 2, 3, 4])
+ans = 3
+>> return_every_third_element([1])
+ans = []
+>> return_every_third_element([1, 2, 3, 4, 3, 2])
+ans = 3     2
+\end{lstlisting}
+\begin{hint}
+The modulus function \verb!mod! can be of great help
+when combined with a \verb!for! loop and an \verb!if! statement.
+
+To add (append) a new element to an existing list, 
+use the following code
+\begin{lstlisting}
+res = []; % Create an empty list.
+res = [res, 3]; % Append the value 3 to the list.
+\end{lstlisting}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = return_every_third_element(list)
+
+res = [];
+for k = 1:length(list)
+    if(mod(k, 3) == 0)
+        res = [res, list(k)];
+    end
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+The store from exercise \ref{exThreeForThePriceOfTwo}, would like
+to extend the three for the price of two offer, to all items
+in the customers shopping basket.
+Create a new function that calculates the total price through 
+the following steps:
+\begin{enumerate}
+\item	sort the list of item prices in decreasing order
+\item	extract every third element from the list
+\item	calculate the sum of all items in the original list (total sum)
+\item	calculate the total discount by adding every third element from the sorted list
+\item 	calculate the final price by subtracting the sum of thirds from the total sum
+\end{enumerate}
+The function signature should be:
+\begin{lstlisting}
+function final_price = three_for_two_offer_many_items(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> three_for_two_offer_many_items([1, 2, 3])
+ans = 5
+>> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3])
+ans = 9
+>> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3, 1, 2, 3])
+ans = 12
+\end{lstlisting}
+\begin{hint}
+Use the option ``descend'' to the \verb!sort! function.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function final_price = three_for_two_offer_many_items(list)
+
+list = sort(list);
+final_price = sum(list) - sum(list(1:3:end));
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
 
 \begin{ex}
 Implement a function that takes a list as input and returns the mean value $\overline{x}$ and 
@@ -1186,30 +1692,6 @@ fminsearch(fh, 1)
 \end{ex}
 
 
-\begin{ex}
-Use the debugger to examine the \verb!binary_log! function.
-\begin{enumerate}
-\item Open the file \href{https://raw.githubusercontent.com/henrikmidtiby/matlab-notes/master/code/debugger_example_binary_log/binary_log.m}{binary.log}
-\item	Insert a \verb!fprintf! statement in line 3, that prints the input arguments given to the function.
-\item	Insert a breakpoint (red circle next to the line numbers) at the start of the function "\verb!binary_log!".
-\item	Call the function as "\verb!binary_log(8)!" and step through the method using the debugger.
-\item	Insert a comment in the function that explains what the while loop in line 6--9 is doing.
-\item	Call the function as "\verb!binary_log(0.25)!" and step through the method using the debugger.
-\item	Insert a comment in the function that explains what the while loop in line 11--14 is doing.
-\end{enumerate}
-\begin{hint}
-Log rules to be aware of
-\[
-\log_2(2 \cdot a) = 1 + \log_2(a) \\
-\log_2(a / 2) = -1 + \log_2(a)
-\]
-\end{hint}
-\begin{sol}
-Lines 6--9 applies the rule $\log_2(2 \cdot a) = 1 + \log_2(a)$ until $a$ is less than 2.
-
-Lines 11--14 applies the rule $\log_2(a / 2) = -1 + \log_2(a)$ until $a$ is greater than or equal to 1.
-\end{sol}
-\end{ex}
 
 
 \begin{ex}
@@ -1238,11 +1720,27 @@ plot(x, gh(x))
 Download the file \verb!test.csv! from this 
 \href{https://raw.githubusercontent.com/henrikmidtiby/matlab-notes/master/code/loading_data/test.csv}{link}.
 Load the data into matlab and plot the data.
+Use the first column as $x$ values and the second column
+as $y$ values.
 \begin{hint}
 \end{hint}
 \begin{sol}
 A solution is:
 \begin{lstlisting}
+% Download the datafile, this could also be done
+% through the web browser.
+url = 'https://raw.githubusercontent.com/henrikmidtiby/matlab-notes/master/code/loading_data/test.csv';
+filename = 'test.csv';
+outfilename = websave(filename, url);
+
+% Load the data into matlab
+data = dlmread(filename);
+figure(1);
+hold off;
+% Plot data in column 1 (the x values) against the 
+% data in column 2 (the y values).
+%
+plot(data(:, 1), data(:, 2));
 \end{lstlisting}
 \end{sol}
 \end{ex}
@@ -1281,9 +1779,21 @@ The command \verb!fzero! can be useful.
 \begin{sol}
 A solution is:
 \begin{verbatim}
-fh = @(x) exp(x) - 4*x;
-root1 = fzero(fh, 1)
-root2 = fzero(fh, 3)
+% Plot functions (left hand side and right hand side 
+% of the equation).
+f = @(x) exp(x);
+g = @(x) 4*x;
+x = linspace(0, 2.5);
+figure(1);
+hold off;
+plot(x, f(x));
+hold on;
+plot(x, g(x));
+
+% Locate solutions / zeros
+difference = @(x) f(x) - g(x);
+root1 = fzero(difference, 0.3)
+root2 = fzero(difference, 2.1)
 \end{verbatim}
 \end{sol}
 \end{ex}
@@ -1500,160 +2010,36 @@ ylim([-4, 4]);
 
 
 
+\begin{ex}
+Use the debugger to examine the \verb!binary_log! function.
+\begin{enumerate}
+\item Open the file \href{https://raw.githubusercontent.com/henrikmidtiby/matlab-notes/master/code/debugger_example_binary_log/binary_log.m}{binary.log}
+\item	Insert a \verb!fprintf! statement in line 3, that prints the input arguments given to the function.
+\item	Insert a breakpoint (red circle next to the line numbers) at the start of the function "\verb!binary_log!".
+\item	Call the function as "\verb!binary_log(8)!" and step through the method using the debugger.
+\item	Insert a comment in the function that explains what the while loop in line 6--9 is doing.
+\item	Call the function as "\verb!binary_log(0.25)!" and step through the method using the debugger.
+\item	Insert a comment in the function that explains what the while loop in line 11--14 is doing.
+\end{enumerate}
+\begin{hint}
+Log rules to be aware of
+\[
+\log_2(2 \cdot a) = 1 + \log_2(a) \\
+\log_2(a / 2) = -1 + \log_2(a)
+\]
+\end{hint}
+\begin{sol}
+Lines 6--9 applies the rule $\log_2(2 \cdot a) = 1 + \log_2(a)$ until $a$ is less than 2.
 
+Lines 11--14 applies the rule $\log_2(a / 2) = -1 + \log_2(a)$ until $a$ is greater than or equal to 1.
+\end{sol}
+\end{ex}
+
+
+\newpage
 \section{Numerical integration}
 
 
-\begin{ex}
-Rewrite the following function such that it uses a for loop.
-
-\begin{lstlisting}
-function functionThatRepeatsStuff()
-disp(1);
-disp(1);
-disp(1);
-disp(1);
-disp(1);
-disp(1);
-disp(1);
-disp(1);
-end
-\end{lstlisting}
-\begin{hint}
-Identify what is repeated and how many times it is repeated.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function functionThatRepeatsStuff()
-for k = 1:8
-  disp(1);
-end
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-\begin{ex}
-Rewrite the following function such that it uses a for loop.
-\begin{lstlisting}
-function functionThatCounts()
-disp(1);
-disp(2);
-disp(3);
-disp(4);
-disp(5);
-disp(6);
-disp(7);
-disp(8);
-disp(9);
-end
-\end{lstlisting}
-\begin{hint}
-Use a for loop, with a structure as shown here:
-\begin{lstlisting}
-for k = 1:4
-end
-\end{lstlisting}
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function functionThatCounts()
-for k = 1:9
-  disp(k);
-end
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-\begin{ex}
-Create \label{exSumOfPositiveIntegersLessThanN}
-a function that takes one positive integer, n, as argument and
-calculates the sum of all integers in the range $1, 2, ..., n$.
-
-\begin{lstlisting}
-function res = sumOfIntegersLessThanOrEqualTo(n)
-\end{lstlisting}
-Example usage of the function:
-\begin{lstlisting}
->> sumOfIntegersLessThanOrEqualTo(1);
->> sumOfIntegersLessThanOrEqualTo(1)
-ans = 1
->> sumOfIntegersLessThanOrEqualTo(5)
-ans = 15
->> sumOfIntegersLessThanOrEqualTo(10)
-ans = 55
->> sumOfIntegersLessThanOrEqualTo(100)
-ans = 5050
-\end{lstlisting}
-\begin{hint}
-Use a for loop, with a structure as shown here:
-\begin{lstlisting}
-for k = 1:n
-end
-\end{lstlisting}
-Prior to the for loop, create a variable and set its value to 0.
-Then update the value in the variable for each cycle in the for loop.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function res = sumOfIntegersLessThanOrEqualTo(n)
-res = 0;
-for k = 1:n
-  res = res + k;
-end
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-
-\begin{ex}
-Create a function that takes one positive integer, n, as argument and
-calculates the sum of all integers in the range $1, 2, ..., n$, which are even.
-
-\begin{lstlisting}
-function res = sumOfEvenIntegersLessThanOrEqualTo(n)
-\end{lstlisting}
-Example usage of the function:
-\begin{lstlisting}
->> sumOfEvenIntegersLessThanOrEqualTo(1);
->> sumOfEvenIntegersLessThanOrEqualTo(1)
-ans = 0
->> sumOfEvenIntegersLessThanOrEqualTo(5)
-ans = 6
->> sumOfEvenIntegersLessThanOrEqualTo(10)
-ans = 30
->> sumOfEvenIntegersLessThanOrEqualTo(100)
-ans = 2550
-\end{lstlisting}
-\begin{hint}
-Modify the solution to exercise \ref{exSumOfPositiveIntegersLessThanN}
-so it only increments the variable when $k$ is even.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function res = sumOfEvenIntegersLessThanOrEqualTo(n)
-res = 0;
-for k = 1:n
-  if(mod(k, 2) == 0)
-    res = res + k;
-  end
-end
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
 
 
 
@@ -1850,7 +2236,7 @@ integral(fh2, 2, 6)
 \end{ex}
 
 
-
+\newpage
 \section{Numerical solutions of differential equations}
 
 
@@ -1899,6 +2285,36 @@ No hint provided yet.
 \end{hint}
 \begin{sol}
 No solution provided yet.
+\begin{lstlisting}
+function [yvals, fevals] = eulers_method(fh, xvals, y0)
+%EULERS_METHOD Solves differential equations numerically.
+
+fevals = 0;
+
+% Preallocate array for yvalues (increases speed)
+yvals = xvals;
+
+% Set the initial y value
+yvals(1) = y0;
+
+% Set current values
+curx = xvals(1);
+cury = y0;
+
+% Update the current values step by step using Eulers method.
+for idx = 2:length(xvals)
+    newx = xvals(idx);
+    derivative = fh(curx, cury);
+    fevals = fevals + 1;
+    dx = newx - curx;
+    dy = derivative * dx;
+    curx = newx;
+    cury = cury + dy;
+    yvals(idx) = cury;
+end
+
+end
+\end{lstlisting}
 \end{sol}
 \end{ex}
 
@@ -1926,309 +2342,10 @@ No solution provided yet.
 \todo[inline]{Add exercises about secret sharing. Get inspiration from this video: Secret Sharing Explained Visually \url{https://www.youtube.com/watch?v=iFY5SyY3IMQ}}
 
 
+\newpage
 \section{More functions}
 
-\begin{ex}
-A store want to implement a 10\% discount to customers 
-buying for 600 kr or more.
-Create a function that implements the discount calculation
-described above, the function must have the signature:
-\begin{lstlisting}
-function actual_price = apply_discount(ordinary_price)
-\end{lstlisting}
-Use the following examples to test the function.
-\begin{lstlisting}
->> apply_discount(100)
-ans = 100
->> apply_discount(600)
-ans = 540
->> apply_discount(1000)
-ans = 900
->> apply_discount(134)
-ans = 134
-\end{lstlisting}
-\begin{hint}
-Use an \verb!if! statement to choose whether the 
-discount should be applied or not.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function actual_price = apply_discount(ordinary_price)
 
-if(ordinary_price >= 600)
-    actual_price = 0.9*ordinary_price;
-else
-    actual_price = ordinary_price;
-end
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-
-\begin{ex}
-\label{exCalcMean}%
-Create a function that calculates the mean value $\overline{x}$ of a list of numbers.
-\begin{align}
-\overline{x}
-	& = \frac{1}{N} \sum_{i = 1}^{N} x_i
-\end{align}
-The function signature should be:
-\begin{lstlisting}
-function mean_value = calcMean(list)
-\end{lstlisting}
-Use the following examples to test the function:
-\begin{lstlisting}
->> calcMean([1]);
->> calcMean([1])
-ans = 1
->> calcMean([1, 3])
-ans = 2
->> calcMean([-1, 7])
-ans = 3
-\end{lstlisting}
-\begin{hint}
-Use a for loop to sum all values.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function mean_value = calcMean(list)
-
-% Initialize counters
-total = 0;
-n_elements = 0;
-
-% Iterate over values in the list
-for value = list
-    total = total + value;
-    n_elements = n_elements + 1;
-end
-
-% Calculate the mean value
-mean_value = total / n_elements;
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-
-\begin{ex}
-\label{exMinOfThree}%
-Create a function which takes three input arguments
-(assumed to be numerical values) and returns the 
-minimum value of the three input values.
-The function must have the signature:
-\begin{lstlisting}
-function minval = min_of_three(a, b, c)
-\end{lstlisting}
-Use the following examples to test the function.
-\begin{lstlisting}
->> min_of_three(1, 2, 3)
-ans = 1
->> min_of_three(100, 2, 3)
-ans = 2
->> min_of_three(-1, 2, -3)
-ans = -3
-\end{lstlisting}
-\begin{hint}
-Use two \verb!if! statements to locate the minimal element.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function minval = min_of_three(a, b, c)
-
-minval = a;
-
-if(b < minval)
-    minval = b;
-end
-
-if(c < minval)
-    minval = c;
-end
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-\begin{ex}
-\label{exThreeForThePriceOfTwo}%
-A store want to offer a buy three items and pay for two items 
-discount (the customer should pay for the two most 
-expensive items).
-Create a function that takes three input values (the price of the individual items) and returns the total price after taking 
-the discount into account.
-The function signature should be:
-\begin{lstlisting}
-function total_price = buy_three_pay_for_two(a, b, c)
-\end{lstlisting}
-Use the following examples to test the function:
-\begin{lstlisting}
->> buy_three_pay_for_two(10, 20, 10)
-ans = 30
->> buy_three_pay_for_two(10, 20, 30)
-ans = 50
->> buy_three_pay_for_two(30, 20, 35)
-ans = 65
-\end{lstlisting}
-\begin{hint}
-The function \verb!min_of_tree! from exercise \ref{exMinOfThree} 
-can simplify the calculation.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function total_price = buy_three_pay_for_two(a, b, c)
-
-total_price = a + b + c - min_of_three(a, b, c);
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-\begin{ex}
-\label{exCalcSquaredMean}%
-Create a function that calculates the mean squared value $\overline{x^2}$ of a list of
-numbers.
-\begin{align}
-\overline{x^2}
-	& = \frac{1}{N} \sum_{i = 1}^{N} x_i^2
-\end{align}
-The function signature should be:
-\begin{lstlisting}
-function res = calcSquaredMean(list)
-\end{lstlisting}
-Use the following examples to test the function:
-\begin{lstlisting}
->> calcSquaredMean([1]);
->> calcSquaredMean([1])
-ans = 1
->> calcSquaredMean([1, 3])
-ans = 5
->> calcSquaredMean([-1, 7])
-ans = 25
-\end{lstlisting}
-\begin{hint}
-Use a for loop to sum the square of all values.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function mean_value = calcSquaredMean(list)
-
-% Initialize counters
-total = 0;
-n_elements = 0;
-
-% Iterate over values in the list
-for value = list
-    total = total + value^2;
-    n_elements = n_elements + 1;
-end
-
-% Calculate the mean value
-mean_value = total / n_elements;
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-
-
-\begin{ex}
-Create a function, that takes a list a input and returns every third element from that list.
-The function signature should be:
-\begin{lstlisting}
-function res = return_every_third_element(list)
-\end{lstlisting}
-Use the following examples to test the function:
-\begin{lstlisting}
->> return_every_third_element([1, 2, 3, 4])
-ans = 3
->> return_every_third_element([1])
-ans = []
->> return_every_third_element([1, 2, 3, 4, 3, 2])
-ans = 3     2
-\end{lstlisting}
-\begin{hint}
-The modulus function \verb!mod! can be of great help
-when combined with a \verb!for! loop and an \verb!if! statement.
-
-To add (append) a new element to an existing list, 
-use the following code
-\begin{lstlisting}
-res = []; % Create an empty list.
-res = [res, 3]; % Append the value 3 to the list.
-\end{lstlisting}
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-function res = return_every_third_element(list)
-
-res = [];
-for k = 1:length(list)
-    if(mod(k, 3) == 0)
-        res = [res, list(k)];
-    end
-end
-
-end
-\end{lstlisting}
-\end{sol}
-\end{ex}
-
-
-\begin{ex}
-The store from exercise \ref{exThreeForThePriceOfTwo}, would like
-to extend the three for the price of two offer, to all items
-in the customers shopping basket.
-Create a new function that calculates the total price through 
-the following steps:
-\begin{enumerate}
-\item	sort the list of item prices in decreasing order
-\item	extract every third element from the list
-\item	calculate the sum of all items in the original list (total sum)
-\item	calculate the total discount by adding every third element from the sorted list
-\item 	calculate the final price by subtracting the sum of thirds from the total sum
-\end{enumerate}
-The function signature should be:
-\begin{lstlisting}
-function final_price = three_for_two_offer_many_items(list)
-\end{lstlisting}
-Use the following examples to test the function:
-\begin{lstlisting}
->> three_for_two_offer_many_items([1, 2, 3])
-ans = 5
->> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3])
-ans = 9
->> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3, 1, 2, 3])
-ans = 12
-\end{lstlisting}
-\begin{hint}
-Use the option ``descend'' to the \verb!sort! function.
-\end{hint}
-\begin{sol}
-A solution is:
-\begin{lstlisting}
-\end{lstlisting}
-\end{sol}
-\end{ex}
 
 
 \subsection{Function handles}
