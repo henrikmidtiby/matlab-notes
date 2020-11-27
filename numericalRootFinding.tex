@@ -1,0 +1,241 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Numerical root finding}
+
+\todo[inline]{Add exercises about plotting phase space diagrams for differential equations}
+\todo[inline]{Examine the stability about equilibria in differential equations}
+
+In the next set of exercises the goal will be to find solutions to the equation
+%
+\begin{align}
+x
+	& = \exp(x - 2)
+\end{align}
+%
+The first step is to rewrite the equation such that one of the sides become 0.
+%
+\begin{align}
+0
+	& = \exp(x - 2) - x
+\end{align}
+%
+The right hand side will be denoted $f(x)$ and the problem is now to find the 
+roots of the function $f(x)$.
+\begin{align}
+0 & = f(x)
+\end{align}
+
+\begin{ex}
+Locate the two roots of the function graphically using the plot command in matlab.
+To ensure precise readings use the zoom functionality.
+Give the roots with at least three correct decimals.
+\end{ex}
+
+
+\subsection{Fixed point iteration}
+
+\begin{align}
+f_0(x_0)
+	& = f(x_0)	\\
+f_n(x_0)
+	& = f_{n - 1}(x_0)
+\end{align}
+
+
+\begin{ex}
+Create a function which performs fixed point iterations on a given
+function.
+The function should take three input arguments, a function handle $f$, the initial x value 
+($x_0$) and the number of iterations ($n$).
+The return value should be $f_n(x_0)$.
+The intermediate calculations $f_0(x_0)$, $f_1(x_0)$, $f_2(x_0)$, \ldots 
+should be displayed on screen.
+
+\begin{lstlisting}
+function res = fixedIter(x0, n)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> fnc = @(x) exp(x - 2);
+>> fixedIter(fnc, 1, 2)
+    0.3679
+    0.1955
+    0.1646
+ans =
+    0.1646
+\end{lstlisting}
+\end{ex}
+
+\begin{ex}
+Does the function fixedIter always converge to the same value when used on the function
+handle given in the exercise above?
+If the function converges, how is the converged value related 
+to the equation $x = \exp(x - 2)$?
+\end{ex}
+
+
+
+
+\begin{ex}
+Implement a function which uses bisection to locate roots in a given function. 
+As input should it take a function handle, the initial interval (given as 
+lower and higher values) and the number of iterations.
+If the function have opposite signs at the lower and higher values the 
+bisection method should run, in the other case a warning should be issued.
+As output the function should return an array containing four columns and a number of 
+rows equal to the number of iterations.
+Each row should have the values \emph{lower}, \emph{higher}, \emph{fvalLower} and 
+\emph{fvalHigher} (the current limits and the function values at the limits).
+ 
+\begin{lstlisting}
+function data = bisection(fnc, lower, higher, iterations)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> fnc = @(x) exp(x - 2) - x;
+>> bisection(fnc, 0, 0.1, 5)
+Bad starting values
+ans =[]
+>> bisection(fnc, 0, 1, 5)
+ans =
+         0    0.5000    0.1353   -0.2769
+         0    0.2500    0.1353   -0.0762
+    0.1250    0.2500    0.0284   -0.0762
+    0.1250    0.1875    0.0284   -0.0243
+    0.1563    0.1875    0.0020   -0.0243
+\end{lstlisting}
+\end{ex}
+
+
+\begin{ex}\\
+Investigate how the bisection method converges. 
+E. g. how many iterations is required to reach a given accuracy?
+\end{ex}
+
+\begin{ex}
+Implement a function which uses the secant method to locate roots in a given function.
+As input should it take a function handle and two different $x$ values near the root 
+that should be located and the number of iterations.
+If the method converges before the requested number of iterations it should halt 
+(the method has converged when the calculated function value is zero).
+After each iteration the method should output the new estimate of the root location $x$
+and the function value at $x$.
+The secant method is described here \url{http://en.wikipedia.org/wiki/Secant_method}.
+
+\begin{lstlisting}
+function secant(fnc, x0, x1, iterations)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> fnc = @(x) exp(x - 2) - x;
+>> format long
+>> secant(fnc, 3, 3.4, 3)
+   3.400000000000000   0.655199966844675
+   3.120274401785570  -0.054579081629965
+   3.141784146672724  -0.009432188618255
+>> secant(fnc, 0.1, 0.2, 9)
+   0.200000000000000  -0.034701111778413
+   0.158821380623629  -0.000191029545640
+   0.158593437586678   0.000000758928080
+   0.158594339582341  -0.000000000016240
+   0.158594339563039                   0
+\end{lstlisting}
+\end{ex}
+
+
+
+\begin{ex}\\
+Implement a function which uses the regula falsi method locate roots in a given function.
+As input should it take a function handle, the initial interval (given as 
+lower and higher values) and the number of iterations.
+If the function has opposite signs at the lower and higher values the 
+regula falsi method should run, in the other case a warning should be issued.
+As output the function should return an array containing four columns and a number of 
+rows equal to the number of iterations.
+Each row should have the values \emph{lower}, \emph{higher}, \emph{fvalLower} and 
+\emph{fvalHigher} (the current limits and the function values at the limits).
+
+\begin{lstlisting}
+function regulafalsi(fnc, lower, higher, iterations)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> fnc = @(x) exp(x - 2) - x;
+>> regulafalsi (fnc, 0 ,  -1,  5)
+Bad starting values
+ans = []
+>> regulafalsi (fnc, 0 ,  0.1,  5)
+Bad starting values
+ans = []
+>> regulafalsi (fnc, 0 ,  1,  4)
+ans =
+         0    0.1763    0.1353   -0.0149
+         0    0.1588    0.1353   -0.0002
+         0    0.1586    0.1353   -0.0000
+         0    0.1586    0.1353   -0.0000
+>> result = regulafalsi (fnc, -10 ,  1,  5)
+result =
+  -10.0000    0.3460   10.0000   -0.1547
+  -10.0000    0.1884   10.0000   -0.0250
+  -10.0000    0.1630   10.0000   -0.0037
+  -10.0000    0.1592   10.0000   -0.0005
+  -10.0000    0.1587   10.0000   -0.0001
+\end{lstlisting}
+\end{ex}
+
+\begin{ex}\\
+Is the regula falsi method working well in the example given above? 
+Try to compare with the convergence of the bisection method, which converges 
+most quickly?
+Try to suggest a combination of the two methods that will converge faster than 
+either bisection and regula falsi.
+\end{ex}
+
+
+
+\begin{ex}\\
+Create a function which implements Newtons method. 
+As input should it take two function handles (one for $f(x)$ and one for $f'(x)$), 
+an initial guess $x_0$ and the number of iterations.
+As output should it return a list of the calculated $x$ values, one value for each performed iteration.
+\begin{lstlisting}
+function result = newton(fnc, dfnc, x0, iterations )
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> fnc = @(x) cos(x);
+>> dfnc = @(x) - sin(x);
+>> format long;
+>> vals = newton(fnc, dfnc, 1, 2)
+vals = 1.000000000000000   1.642092615934331   1.570675277161251
+\end{lstlisting}
+\end{ex}
+
+
+
+
+\begin{ex}\\
+Compare the convergence properties of the implemented functions for rootfinding, 
+ie how many iterations are required to reach a function value below $10^{-1}$,
+$10^{-2}$, $10^{-4}$, $10^{-8}$, $10^{-12}$\,?
+
+Use the following equation as case: $f(x) = \exp(x - 4) + \cos(x)$.
+As initial values use $x_0 = 5$ for Newtons method and the ends of the range 
+$x \in [2; 5]$ for the methods requiring two initial values.
+Make table like the one below, which contains the number of iterations used for 
+each method to find a function value less than a given threshold.
+
+\begin{centering}
+\begin{tabular}{l|r|r|r|r|r}
+Method \textbackslash Function value	& $10^{-1}$ & $10^{-2}$ & $10^{-4}$ & $10^{-8}$ & $10^{-12}$ \\
+\hline
+Newton	&  	& 3 	&  	&  	&	\\
+Secant	& 4	&	& 	& 	&	\\
+Bisection	&	&	&	&	&	\\
+Regula falsi &	&	&	& 	& 36	\\
+\end{tabular}
+\end{centering}
+\end{ex}
+ 

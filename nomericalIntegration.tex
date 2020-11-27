@@ -1,0 +1,485 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Numerical integration}
+\SetExerciseDirectory{08_numerical_integration}
+
+
+
+\subsection{Formatting variables with sprintf}
+
+To show a numeric value in a string in a specific way can be 
+done with the function \verb!sprintf!.
+The command takes one or more input arguments.
+The first argument is a format specifier and the rest
+of the arguments are the values that will be inserted 
+into the string.
+Eg. to display the value of $\pi$ with 5 decimals
+along with a descriptive text, the following code 
+can be used:
+\begin{lstlisting}
+>> sprintf("The value of pi is: %.5f", pi)
+ans = "The value of pi is: 3.14159"
+\end{lstlisting}
+It is also possible to insert multiple variables
+of different types into the string, this is demonstrated 
+here.
+\begin{lstlisting}
+>> sprintf("My name is %s. I was born in %d.", "Henrik", 1983)
+ans = "My name is Henrik. I was born in 1983."
+\end{lstlisting}
+To display the formatted string in the console
+instead of returning it, the function
+\verb!fprintf! can be used.
+\begin{lstlisting}
+>> fprintf("Pi is %.2f\n", pi)
+Pi is 3.14
+\end{lstlisting}
+Read more about the format specifiers in the documentation
+\begin{lstlisting}
+>> help sprintf
+\end{lstlisting}
+
+
+
+
+\begin{ex}
+Create a function for entering phasors into matlab.
+The function signature should be:
+\begin{lstlisting}
+function res = phasor(magnitude, direction)
+\end{lstlisting}
+where \verb!magnitude! is the amplitude of the 
+phasor to generate and \verb!direction! is the phase offset
+in degrees.
+Use the following examples to test the function:
+\begin{lstlisting}
+>> phasor(2, 45)
+ans = 1.4142 + 1.4142i
+>> phasor(3, 90)
+ans = 0.0000 + 3.0000i
+>> phasor(1, 135)
+ans = -0.7071 + 0.7071i
+\end{lstlisting}
+\begin{hint}
+A phasor is defined as 
+\begin{align*}
+\textrm{magnitude} \cdot e^{i \cdot \textrm{direction}}
+\end{align*}
+where the direction is specified in radians
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = phasor(magnitude, direction)
+
+res = magnitude * exp(1i*direction*pi / 180);
+
+end\end{lstlisting}
+\end{sol}
+\begin{solutionfile}{phasor_test.m}
+function tests = phasor_test
+    tests = functiontests(localfunctions);
+end
+
+
+%% Format phasor for human reading
+function test01(testCase)
+    actual_value = phasor(2, 45);
+    expected_value = 2*sin(pi / 4) + 2*cos(pi/4)*1i;
+    testCase.verifyEqual(actual_value, expected_value,...
+        'RelTol', 0.000001);
+end
+\end{solutionfile}
+\begin{solutionfile}{phasor.m}
+function res = phasor(magnitude, direction)
+
+res = magnitude * exp(1i*direction*pi / 180);
+
+end
+\end{solutionfile}
+\end{ex}
+
+
+\begin{ex}
+Create a function that displays the magnitude and 
+phase offset (in degrees) of a phasor.
+Both magnitude and phase offset should be shown with six 
+decimal values.
+The function signature should be:
+\begin{lstlisting}
+function res = show_phasor(value)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> show_phasor(1+i)
+ans = "1.414214 < 45.000000"
+>> show_phasor(2-3*i)
+ans = "3.605551 < -56.309932"
+\end{lstlisting}
+\begin{hint}
+The functions \verb!abs! and \verb!angle! will be helpful together with the \verb!sprintf! function.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = show_phasor(value)
+
+magnitude = abs(value);
+phase_offset = angle(value) * 180 / pi;
+res = sprintf("%.6f < %.6f", magnitude, phase_offset);
+
+end
+\end{lstlisting}
+\end{sol}
+\begin{solutionfile}{show_phasor.m}
+function res = show_phasor(value)
+
+magnitude = abs(value);
+phase_offset = angle(value) * 180 / pi;
+res = sprintf("%.6f < %.6f", magnitude, phase_offset);
+
+end
+\end{solutionfile}
+\begin{solutionfile}{show_phasor_test.m}
+function tests = show_phasor_test
+    tests = functiontests(localfunctions);
+end
+
+
+%% Format phasor for human reading
+function test01(testCase)
+    actual_value = show_phasor(2);
+    expected_value = "2.000000 < 0.000000";
+    testCase.verifyEqual(actual_value, expected_value);
+end
+
+function test02(testCase)
+    actual_value = show_phasor(2 + 2*1i);
+    expected_value = "2.828427 < 45.000000";
+    testCase.verifyEqual(actual_value, expected_value);
+end
+\end{solutionfile}
+\end{ex}
+
+
+
+\subsection{Trapezoidal rule}
+It is not always possible to evaluate the definite integral
+\[
+\int_a^b f(x) \, dx
+\]
+as it can be difficult or even impossible to determine the 
+anti--derivative $F(x)$.
+
+The value of the definite integral can however be estimated
+using numerical methods.
+The Trapezoidal rule is one approach for estimating the 
+numerical value of the integral, the Trapezoidal rule 
+is based on the approximation:
+\[
+\int_a^b f(x) \, dx \simeq (b - a) \cdot \frac{f(a) + f(b)}{2}
+\]
+
+The error of the approximation depends on the function that 
+is being integrated $f(x)$ and the length of the integration 
+interval.
+To reduce the error, the range of the integral can be divided 
+into two and then the approximation is applied to each interval.
+\begin{align*}
+\int_a^b f(x) \, dx 
+& = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx \\
+& \simeq (c - a) \cdot \frac{f(a) + f(c)}{2} + (b - c) \cdot \frac{f(c) + f(b)}{2}
+\end{align*}
+
+
+\begin{ex}
+Explain how the Trapezoidal rule works.
+\[
+\int_a^b f(x) \, dx \simeq (b - a) \cdot \frac{f(a) + f(b)}{2}
+\]
+\begin{hint}
+Draw a function and the area below the function over the r
+range of integration.
+Can you recognize the values $(b - a)$ and $\frac{f(a) + f(b)}{2}$
+in the figure?
+\end{hint}
+\begin{sol}
+No solution provided yet.
+\end{sol}
+\end{ex}
+
+\begin{ex}
+Plot the function 
+\[
+f(x) = e^{-x} \cdot \sin(x)
+\]
+over the range $x \in [0, 5]$.
+\begin{hint}
+Define a function handle.
+Make a list of x values that covers the range.
+Apply the function handle to the x values.
+Plot the calculated function values against the x values.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+figure(1);
+f = @(x) exp(-x) .* sin(x);
+x = linspace(0, 5);
+plot(x, f(x));
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}[Reference value]\label{exTrapezRuleReference}%
+Evaluate the integral below numerically using the \verb!integral! function.
+\[
+\int_0^5 e^{-x} \cdot \sin(x) \, dx
+\]
+\begin{hint}
+The two first significant digits are 0.50.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{verbatim}
+fh = @(x) exp(-x) .* sin(x);
+integral(fh, 0, 5)
+\end{verbatim}
+\end{sol}
+\end{ex}
+
+\begin{ex}[Trapezoidal rule example]\label{exTrapezRule}%
+Create a list of 10 evenly spaced $x$--values from 
+0 to 5, these values will be called $x_i$.
+Evaluate the function 
+\[
+f(x) = e^{-x} \cdot \sin(x)
+\]
+at these $x$--values and save these values in 
+a list called $y_i$.
+Then calculate the sum
+\[
+\sum_{i = 1}^{9} \frac{y_i + y_{i + 1}}{2} \cdot (x_{i + 1} - x_i)
+\]
+\begin{hint}
+Use \verb!linspace! to generate a list of x-values.
+\end{hint}
+\begin{sol}
+A solution based on a for loop is
+\begin{lstlisting}
+nvals = 10;
+x = linspace(0, 5, nvals);
+
+fh = @(x) exp(-x) .* sin(x);
+fx = fh(x);
+
+value = 0;
+for k = 1:(nvals - 1)
+    avg_height = 0.5*(fx(k) + fx(k + 1));
+    dx = x(k + 1) - x(k);
+    value = value + avg_height * dx;
+end
+\end{lstlisting}
+
+A more compact solution based on vectorization
+is 
+\begin{lstlisting}
+nvals = 10;
+x = linspace(0, 5, nvals);
+
+fh = @(x) exp(-x) .* sin(x);
+fx = fh(x);
+
+dx = x(2:end) - x(1:end-1);
+avg = 0.5 * (fx(1:end-1) + fx(2:end));
+value = dx * avg';
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}[Error]%
+Calculate the difference between the approximation from 
+exercise \ref{exTrapezRule} and the reference values from 
+exercise \ref{exTrapezRuleReference}.
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}[Reduced step length]%
+Repeat exercise \ref{exTrapezRule}, but use 20 steps instead of 10.
+\begin{hint}
+Look at the solution to \ref{exTrapezRule} and modify the call to linspace.
+\end{hint}
+\begin{sol}
+\begin{lstlisting}
+nvals = 20;
+x = linspace(0, 5, nvals);
+
+fh = @(x) exp(-x) .* sin(x);
+fx = fh(x);
+
+value = 0;
+for k = 1:(nvals - 1)
+    avg_height = 0.5*(fx(k) + fx(k + 1));
+    dx = x(k + 1) - x(k);
+    value = value + avg_height * dx;
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}[Trapezoidal rule as a function]%
+Create a function that uses the Trapezoidal rule to estimate the 
+value of a definite integral.
+The function must have the signature
+\begin{lstlisting}
+function res = trapez_rule(fh, x_low, x_high, n_intervals)
+\end{lstlisting}
+where \verb!fh! is a function handle, 
+\verb!x_low! and \verb!x_high! are the integration limits
+and \verb!n_intervals! is the number of subintervals 
+used for evaluating the integral.
+Use the following examples to test the function
+\begin{lstlisting}
+>> fh = @(x) exp(-x) .* sin(x);
+>> trapez_rule(fh, 0, 5, 10)
+ans = 0.4770
+>> trapez_rule(fh, 0, 5, 20)
+ans = 0.4966
+>> trapez_rule(fh, 0, 5, 100)
+ans = 0.5021
+\end{lstlisting}
+\begin{hint}
+Use your solution from exercise \ref{exTrapezRule} and build a function around it.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = trapez_rule(fh, x_low, x_high, n_intervals)
+
+x = linspace(x_low, x_high, n_intervals);
+fx = fh(x);
+res = 0;
+for k = 1:(n_intervals - 1)
+    avg_height = 0.5*(fx(k) + fx(k + 1));
+    dx = x(k + 1) - x(k);
+    res = res + avg_height * dx;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\begin{solutionfile}{trapez_rule.m}
+function res = trapez_rule(fh, x_low, x_high, n_intervals)
+
+x = linspace(x_low, x_high, n_intervals);
+fx = fh(x);
+res = 0;
+for k = 1:(n_intervals - 1)
+    avg_height = 0.5*(fx(k) + fx(k + 1));
+    dx = x(k + 1) - x(k);
+    res = res + avg_height * dx;
+end
+
+end
+\end{solutionfile}
+\begin{solutionfile}{trapez_rule_test.m}
+function tests = trapez_rule_test
+    tests = functiontests(localfunctions);
+end
+
+%% Test 1: Uniform sampling
+function test1(testCase)
+    fh = @(x) exp(-x) .* sin(x);
+    actual_value =  trapez_rule(fh, 0, 5, 10);
+    expected_value = 0.4770;
+    testCase.verifyEqual(actual_value, expected_value, ...
+        'RelTol', 0.001);
+end
+
+%% Test 2: 
+function test2(testCase)
+    fh = @(x) exp(-x) .* sin(x);
+    actual_value =  trapez_rule(fh, 0, 5, 20);
+    expected_value = 0.4966;
+    testCase.verifyEqual(actual_value, expected_value, ...
+        'RelTol', 0.001);
+end
+
+\end{solutionfile}
+\end{ex}
+
+\begin{ex}
+Investigate how the numerical error of the estimate decreases 
+as the number of intervals are increased.
+Make a table of the used step lengths and the 
+associated errors.
+To do this you will have to select a function and an 
+interval over which the definite integral should be
+calculated.
+\begin{hint}
+Call the \verb!trapez_rule! function with different 
+number of steps.
+For each call of the function, write the step length
+and the error to the console.
+\end{hint}
+\begin{sol}
+A solution is: 
+\begin{lstlisting}
+fh = @(x) exp(-x) .* sin(x);
+xlow = 0;
+xhigh = 5;
+ref = integral(fh, xlow, xhigh);
+
+for k = 1:10
+    steps = 2^k;
+    val = trapez_rule(fh, xlow, xhigh, steps);
+    fprintf("%8.3f %8.3f\n", (xhigh - xlow) / steps, val - ref);
+end
+\end{lstlisting}
+The error is seen to be proportional to the step length
+squared.
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Estimate the values of the integrals
+\[
+V_1 = \int_1^3 \sin(2x) \, dx \qquad \textrm{and} \qquad
+V_2 = \int_2^6 \frac{\sin(x)}{2} \, dx.
+\]
+How would you expect them to be related?
+\begin{hint}
+Use the \verb!integral! function.
+The substitution rule has been applied to the first
+integral and this has generated the second integral.
+\end{hint}
+\begin{sol}
+A solution is
+\begin{lstlisting}
+fh1 = @(x) sin(2*x);
+fh2 = @(x) sin(x) / 2;
+integral(fh1, 1, 3)
+integral(fh2, 2, 6)
+\end{lstlisting}
+
+As the integrals are related to each other 
+through the substitution rule, they should have 
+the exact same value; which is also confirmed 
+using matlab.
+\end{sol}
+\end{ex}
+
+
+
+ 

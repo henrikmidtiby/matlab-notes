@@ -1,0 +1,478 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Matlab introduction}
+\todo[inline]{Add Matlab introduction exercises}
+\todo[inline]{Add exercises about systems of linear equations}
+
+
+\subsection{Creating functions}
+
+\subsection{If statements}
+
+\subsection{For loops}
+
+\subsection{While loops}
+
+
+\subsection{Plot of functions}
+
+\begin{ex}
+Plot the function $f(x) = cos(x) + 3*sin(3*x)$
+over the $x$ range $[-2, 2]$.
+Use the following template 
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(0, 10, 100);
+
+% Calculate the associated y value
+y = sin(x);
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(-2, 2, 100);
+
+% Calculate the associated y value
+y = cos(x) + 3*sin(3*x);
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Plot the function $f(x) = 1 / (1.1 + sin(4*x))$
+over the interval $x \in [-3, 3]$.
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(-3, 3, 100);
+
+% Calculate the associated y value
+y = 1 ./ (1.1 + sin(4*x));
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\end{sol}
+\begin{solutionfile}{plot}
+% Create evenly distributed x values that covers the range
+x = linspace(-3, 3, 100);
+
+% Calculate the associated y value
+y = 1 ./ (1.1 + sin(4*x));
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{solutionfile}
+\end{ex}
+
+
+\subsection{Plot of secant lines}
+
+\begin{ex}
+Draw multiple secant lines on the same figure.
+The distance between the points that define the secant line
+should be reduced before plotting the next secant line.
+Use the following distances between the $x$ values:
+$h \in {0.2, 0.1, 0.05, 0.02, 0.01}$.
+Please use the template below
+\begin{lstlisting}
+% Create x values
+x = linspace(-3, 6, 100);
+
+% Create a function handle for the function to plot.
+fh = @(x) 2*x.^2 - x + 1;
+
+% Find the two end points of the secant to plot.
+h = 2;
+x0 = 0.2;
+x1 = x0 + h;
+y0 = fh(x0);
+y1 = fh(x1);
+
+% Open a figure and plot the x and y values.
+figure(2);
+hold off;
+% Plot the function
+plot(x, fh(x));
+hold on;
+plot([x0, x1], [y0, y1], 'o-');
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+%
+%%% Indskrive vektorer og matricer
+%A = [1, 2, 3; 2, 3, 1; 1, 1, 1]
+%B = [1, 1, 1; 1, 2, 4; 7, 6, 5]
+%C = [1; 2; 3]
+%
+%
+%%% Addition
+%disp('addition');
+%A + A
+%A + B
+%B + A
+%B + B
+%
+%
+%%% Multiplikation
+%disp('multiplikation');
+%A * A
+%A * B
+%B * A
+%B * B
+%
+%
+%%% 
+%% Transponering
+%A
+%transpose(A)
+%A'
+%
+%
+%%% Opgave
+%% Find nogle opgaver med matricer og vektorer.
+%% Tjek jeres resultater ved at få Matlab til at udføre de samme beregninger
+%% som I har gjort i hånden.
+%
+%
+%
+%%%
+%% Løsning af lineære ligningssystemer
+%
+%% Givet ligningerne
+%% 2*x1 + 5*x2 = 2 og -4*x1+3*x2 = -30.
+%% Kan koefficient matricen A og værdi vektoren b opskrives.
+%A = [2, 5; -4, 3];
+%b = [2; -30];
+%
+%% Ud fra værdi vektoren og koefficient matricen, kan 
+%% løsningen til ligningssystemet bestemmes på følgende 
+%% tre forskellige måder.
+%A \ b
+%inv(A) * b
+%linsolve(A, b)
+%
+%
+%%%
+%% Opgave
+%% Plot ligningerne x + 2y = 3 og 2x - y = 2 i det samme 
+%% koordinatsystem.
+%% Opskriv ligningsystemet på matrix form og løs det via 
+%% linsolve eller lign.
+%% Plot løsningen sammen med de to ligninger.
+%% Tjek i hånden at det fremkomne resultat løser de oprindelige 
+%% ligninger.
+%% teknik.
+%
+%
+%
+%
+%%%
+%% Opgave
+%% Der er en fejl i den gauss elimination der fremgår herunder.
+%% Benyt funktionen rref (reduced row echelon form), til at 
+%% finde fejlen, ved at anvende rref på de forskellige delresultater.
+%[1, 2, 3, 1; 3, 2, 1, 1; 1, 1, 2, 1]
+%[1, 2, 3, 1; 0, -4, -8, -2; 0, -1, -1, 0]
+%[1, 2, 3, 1; 0, 1, -2, 0.5; 0, -2, -1, 0]
+%[1, 2, 3, 1; 0, 1, -2, 0.5; 0, 0, -5, 1]
+
+%
+%\subsection{Compare derivatives}
+%
+%\begin{ex}
+%\begin{lstlisting}
+%%% Sammenlign funktion og dens afledte
+%x = linspace(-0.5, 6.2, 100);
+%fh = @(x) sin(x);
+%fh_prime = @(x) cos(x);
+%
+%figure(3);
+%hold off;
+%plot(x, fh(x));
+%hold on;
+%plot(x, fh_prime(x), 'r');
+%legend("f(x)", "f'(x)")
+%title("Symbolsk afledte")
+%
+%
+%%% Numerisk estimering af afledte
+%% Definer x vaerdier funktionen skal plottes for
+%x = linspace(-0.5, 6.2, 100);
+%dx = 0.001;
+%xprime = x + dx;
+%
+%% Beregn y vaerdier som skal plottes
+%fh = @(x) sin(x);
+%y = fh(x);
+%yprime = sin(xprime);
+%dy = yprime - y;
+%derivative = dy / dx;
+%
+%% Aabn en figur og plot x og y vaerdierne.
+%figure(2);
+%plot(x, fh(x));
+%% Hold fast i det der allerede er plottet.
+%hold on;
+%plot(x, derivative);
+%hold off;
+%legend("f(x)", "f'(x)")
+%title("Numerisk afledte")
+%
+%
+%
+%%% Opgave
+%% Sammenlign den analytisk afledte af funktionen 
+%% f(x) = (3*x^2+sin(4*x))^2
+%% med den numerisk afledte.
+%% Benyt gerne koden herover.
+%
+%
+%
+%%% Numerisk beregning af graense vaerdier (1.1, 1.01, 1.001, 1.0001, 1.00001, ...)
+%
+%% Soerg for at matlab skriver komma tal med mange decimaler
+%% efter kommaet.
+%format long;
+%
+%% Definer funktionen der skal undersoeges, og hvilken vaerdi x
+%% skal gaa mod i graensen.
+%fh = @(x) (x.^2 - 1) ./ (x - 1);
+%xval = 1;
+%
+%% Lav en liste med en raekke vaerdier, der gradvist kommer naermere
+%% graensevaerdien.
+%xvals = xval + 10.^(-linspace(1, 10, 10));
+%approx_limits = fh(xvals);
+%figure(3);
+%plot(xvals, approx_limits, 'o:');
+%
+%% Skift tilbage til normal visning af kommatal.
+%format short;
+%
+%\end{lstlisting}
+%\begin{hint}
+%\end{hint}
+%\begin{sol}
+%A solution is:
+%\begin{lstlisting}
+%\end{lstlisting}
+%\end{sol}
+%\end{ex}
+
+
+
+\subsection{Find minima}
+
+%%% Finde minima af en funktion
+%% Lav en function handle til den funktion der skal plottes.
+%% Det gør det lettere at tilpasse koden senere.
+%% Notationen med x.^2, handler om at funktionen skal virke på
+%% vektorer.
+%fh = @(x) 2*x.^2 - x + 1;
+%initial_guess = 1;
+%x_min = fminsearch(fh, initial_guess);
+%
+%% Definer x værdier funktionen skal plottes for
+%x = linspace(-1, 2, 100);
+%
+%% Åbn en figur og plot x og y værdierne.
+%figure(1);
+%hold off;
+%plot(x, fh(x));
+%hold on;
+%plot(x_min, fh(x_min), 'o');
+%
+%
+%%%
+%% Opgave
+%% Bestem minima af funktionen f(x) = x + 2/x.
+%% Se udelukkende på positive værdier af x.
+%% Plot funktionen og indsæt et passende startgæt i 
+%% kaldet til fminsearch.
+%
+%
+%
+%
+%%%
+%% Opgave
+%% Bestem minima af funktionen f(x) = x^2 + 1 / x.
+%
+%
+%
+%
+%
+%
+%%% Finde maksimum af en funktion
+
+\begin{lstlisting}
+% Make a function handle to the function that is to be
+% plotted. This makes it easier to adapt the code later.
+% The notation \verb!x.^2!, is to ensure that the function
+% also works on vectors.
+fh = @(x) -2*x.^2 - 3*x + 1;
+
+% Locate the maximum value of the function (notice the
+% minus in the function handle). 
+% Use an initial guess of x = 1.
+x_min = fminsearch(@(x) -fh(x), 1);
+
+x = linspace(-1, 2, 100);
+
+% Open a figure and plot associated x and y values.
+figure(1);
+hold off;
+plot(x, fh(x));
+hold on;
+% Indicate the location of the maxima.
+plot(x_min, fh(x_min), 'o');
+\end{lstlisting}
+
+
+%
+%
+%
+%%%
+%% Opgave
+%% Find et lokalt maksimum af funktionen 
+%% f(x) = cos(3 - x) * exp(-x^2)
+%
+%
+%%%
+%% Opgave
+%% Find det globale maksimum af funktionen 
+%% f(x) = cos(3 - x) * exp(-x^2)
+%
+
+
+
+\subsection{Plotting inverse functions}
+
+\begin{ex}
+Plot the function $f(x) = \sin(x)$ on the interval $x \in [-pi/2, pi/2]$
+and determine whether the function has an inverse.
+The template below might be helpful.
+\begin{lstlisting}
+% Plot of functions and their inverse
+x = linspace(0, 3, 100);
+y = sqrt(x);
+figure(1);
+hold off;
+plot(x, y);
+hold on; 
+plot(y, x);
+plot(x, x, 'k:');
+legend('f(x)', 'inverse function');
+\end{lstlisting}
+\begin{hint}
+If a function has an inverse, it should be one-to-one (en-en-tydig).
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+x = linspace(0, 3, 100);
+y = sin(x);
+figure(1);
+hold off;
+plot(x, y);
+hold on; 
+plot(y, x);
+plot(x, x, 'k:');
+legend('f(x)', 'inverse function');
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Plot the function $f(x) = \cos(x)$ on the interval $x \in [-pi/2, pi/2]$
+and determine whether the function has an inverse.
+\begin{lstlisting}
+\end{lstlisting}
+\begin{hint}
+If a function has an inverse, it should be one-to-one (en-en-tydig).
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}\label{exfzero}%
+Solve the equation $0 = 4 + x - x^2$ using the \verb!fzero! function.
+How many solutions would you expect to find? How many solutions do 
+you actually find?
+The template below might be useful:
+\begin{lstlisting}
+fh = @(x) 0.2 + sin(x);
+x = linspace(0, 6, 100);
+y = fh(x);
+figure(2);
+hold off;
+plot(x, y); 
+guess = 2;
+root = fzero(fh, guess)
+hold on
+plot(root, 0, 'o');
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+This exercise is a continuation from \ref{exfzero}.
+Get details from \verb!fzero! about how the solution was found.
+Look at the documentation to see how.
+\begin{hint}
+\begin{lstlisting}
+help fzero
+\end{lstlisting}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+options = optimset('Display','iter');
+fh = @(x) 0.2 + sin(x);
+guess = 2;
+[x, fval] = fminsearch(fh, guess, options)
+\end{lstlisting}
+\end{sol}
+\end{ex}
+ 

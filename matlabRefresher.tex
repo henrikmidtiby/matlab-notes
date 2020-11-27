@@ -1,0 +1,769 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Matlab refresher}
+
+\begin{ex}
+A store want to implement a 10\% discount to customers 
+buying for 600 kr or more.
+Create a function that implements the discount calculation
+described above, the function must have the signature:
+\begin{lstlisting}
+function actual_price = apply_discount(ordinary_price)
+\end{lstlisting}
+Use the following examples to test the function.
+\begin{lstlisting}
+>> apply_discount(100)
+ans = 100
+>> apply_discount(600)
+ans = 540
+>> apply_discount(1000)
+ans = 900
+>> apply_discount(134)
+ans = 134
+\end{lstlisting}
+\begin{hint}
+Use an \verb!if! statement to choose whether the 
+discount should be applied or not.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function actual_price = apply_discount(ordinary_price)
+
+if(ordinary_price >= 600)
+    actual_price = 0.9*ordinary_price;
+else
+    actual_price = ordinary_price;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+\label{exCalcMean}%
+Create a function that calculates the mean value $\overline{x}$ of a list of numbers.
+\begin{align}
+\overline{x}
+	& = \frac{1}{N} \sum_{i = 1}^{N} x_i
+\end{align}
+The function signature should be:
+\begin{lstlisting}
+function mean_value = calcMean(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> calcMean([1]);
+>> calcMean([1])
+ans = 1
+>> calcMean([1, 3])
+ans = 2
+>> calcMean([-1, 7])
+ans = 3
+\end{lstlisting}
+\begin{hint}
+Use a for loop to sum all values.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function mean_value = calcMean(list)
+
+% Initialize counters
+total = 0;
+n_elements = 0;
+
+% Iterate over values in the list
+for value = list
+    total = total + value;
+    n_elements = n_elements + 1;
+end
+
+% Calculate the mean value
+mean_value = total / n_elements;
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+\label{exMinOfThree}%
+Create a function which takes three input arguments
+(assumed to be numerical values) and returns the 
+minimum value of the three input values.
+The function must have the signature:
+\begin{lstlisting}
+function minval = min_of_three(a, b, c)
+\end{lstlisting}
+Use the following examples to test the function.
+\begin{lstlisting}
+>> min_of_three(1, 2, 3)
+ans = 1
+>> min_of_three(100, 2, 3)
+ans = 2
+>> min_of_three(-1, 2, -3)
+ans = -3
+\end{lstlisting}
+\begin{hint}
+Use two \verb!if! statements to locate the minimal element.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function minval = min_of_three(a, b, c)
+
+minval = a;
+
+if(b < minval)
+    minval = b;
+end
+
+if(c < minval)
+    minval = c;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+\label{exThreeForThePriceOfTwo}%
+A store want to offer a buy three items and pay for two items 
+discount (the customer should pay for the two most 
+expensive items).
+Create a function that takes three input values (the price of the individual items) and returns the total price after taking 
+the discount into account.
+The function signature should be:
+\begin{lstlisting}
+function total_price = buy_three_pay_for_two(a, b, c)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> buy_three_pay_for_two(10, 20, 10)
+ans = 30
+>> buy_three_pay_for_two(10, 20, 30)
+ans = 50
+>> buy_three_pay_for_two(30, 20, 35)
+ans = 65
+\end{lstlisting}
+\begin{hint}
+The function \verb!min_of_tree! from exercise \ref{exMinOfThree} 
+can simplify the calculation.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function total_price = buy_three_pay_for_two(a, b, c)
+
+total_price = a + b + c - min_of_three(a, b, c);
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Rewrite the following function such that it uses a for loop.
+
+\begin{lstlisting}
+function functionThatRepeatsStuff()
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+disp(1);
+end
+\end{lstlisting}
+\begin{hint}
+Identify what is repeated and how many times it is repeated.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function functionThatRepeatsStuff()
+for k = 1:8
+  disp(1);
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Rewrite the following function such that it uses a for loop.
+\begin{lstlisting}
+function functionThatCounts()
+disp(1);
+disp(2);
+disp(3);
+disp(4);
+disp(5);
+disp(6);
+disp(7);
+disp(8);
+disp(9);
+end
+\end{lstlisting}
+\begin{hint}
+Use a for loop, with a structure as shown here:
+\begin{lstlisting}
+for k = 1:4
+end
+\end{lstlisting}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function functionThatCounts()
+for k = 1:9
+  disp(k);
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Create \label{exSumOfPositiveIntegersLessThanN}
+a function that takes one positive integer, n, as argument and
+calculates the sum of all integers in the range $1, 2, ..., n$.
+The function signature should be:
+\begin{lstlisting}
+function res = sumOfIntegersLessThanOrEqualTo(n)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> sumOfIntegersLessThanOrEqualTo(1);
+>> sumOfIntegersLessThanOrEqualTo(1)
+ans = 1
+>> sumOfIntegersLessThanOrEqualTo(5)
+ans = 15
+>> sumOfIntegersLessThanOrEqualTo(10)
+ans = 55
+>> sumOfIntegersLessThanOrEqualTo(100)
+ans = 5050
+\end{lstlisting}
+\begin{hint}
+Use a for loop, with a structure as shown here:
+\begin{lstlisting}
+for k = 1:n
+end
+\end{lstlisting}
+Prior to the for loop, create a variable and set its value to 0.
+Then update the value in the variable for each cycle in the for loop.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = sumOfIntegersLessThanOrEqualTo(n)
+res = 0;
+for k = 1:n
+  res = res + k;
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+Create a function that takes one positive integer, n, as argument and
+calculates the sum of all integers in the range $1, 2, ..., n$, which are even.
+The function signature should be:
+\begin{lstlisting}
+function res = sumOfEvenIntegersLessThanOrEqualTo(n)
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> sumOfEvenIntegersLessThanOrEqualTo(1);
+>> sumOfEvenIntegersLessThanOrEqualTo(1)
+ans = 0
+>> sumOfEvenIntegersLessThanOrEqualTo(5)
+ans = 6
+>> sumOfEvenIntegersLessThanOrEqualTo(10)
+ans = 30
+>> sumOfEvenIntegersLessThanOrEqualTo(100)
+ans = 2550
+\end{lstlisting}
+\begin{hint}
+Modify the solution to exercise \ref{exSumOfPositiveIntegersLessThanN}
+so it only increments the variable when $k$ is even.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = sumOfEvenIntegersLessThanOrEqualTo(n)
+res = 0;
+for k = 1:n
+  if(mod(k, 2) == 0)
+    res = res + k;
+  end
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+\label{exCalcSquaredMean}%
+Create a function that calculates the mean squared value $\overline{x^2}$ of a list of
+numbers.
+\begin{align}
+\overline{x^2}
+	& = \frac{1}{N} \sum_{i = 1}^{N} x_i^2
+\end{align}
+The function signature should be:
+\begin{lstlisting}
+function res = calcSquaredMean(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> calcSquaredMean([1]);
+>> calcSquaredMean([1])
+ans = 1
+>> calcSquaredMean([1, 3])
+ans = 5
+>> calcSquaredMean([-1, 7])
+ans = 25
+\end{lstlisting}
+\begin{hint}
+Use a for loop to sum the square of all values.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function mean_value = calcSquaredMean(list)
+
+% Initialize counters
+total = 0;
+n_elements = 0;
+
+% Iterate over values in the list
+for value = list
+    total = total + value^2;
+    n_elements = n_elements + 1;
+end
+
+% Calculate the mean value
+mean_value = total / n_elements;
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+
+\begin{ex}
+Create a function, that takes a list a input and returns every third element from that list.
+The function signature should be:
+\begin{lstlisting}
+function res = return_every_third_element(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> return_every_third_element([1, 2, 3, 4])
+ans = 3
+>> return_every_third_element([1])
+ans = []
+>> return_every_third_element([1, 2, 3, 4, 3, 2])
+ans = 3     2
+\end{lstlisting}
+\begin{hint}
+The modulus function \verb!mod! can be of great help
+when combined with a \verb!for! loop and an \verb!if! statement.
+
+To add (append) a new element to an existing list, 
+use the following code
+\begin{lstlisting}
+res = []; % Create an empty list.
+res = [res, 3]; % Append the value 3 to the list.
+\end{lstlisting}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function res = return_every_third_element(list)
+
+res = [];
+for k = 1:length(list)
+    if(mod(k, 3) == 0)
+        res = [res, list(k)];
+    end
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+The store from exercise \ref{exThreeForThePriceOfTwo}, would like
+to extend the three for the price of two offer, to all items
+in the customers shopping basket.
+Create a new function that calculates the total price through 
+the following steps:
+\begin{enumerate}
+\item	sort the list of item prices in decreasing order
+\item	extract every third element from the list
+\item	calculate the sum of all items in the original list (total sum)
+\item	calculate the total discount by adding every third element from the sorted list
+\item 	calculate the final price by subtracting the sum of thirds from the total sum
+\end{enumerate}
+The function signature should be:
+\begin{lstlisting}
+function final_price = three_for_two_offer_many_items(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> three_for_two_offer_many_items([1, 2, 3])
+ans = 5
+>> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3])
+ans = 9
+>> three_for_two_offer_many_items([1, 2, 3, 1, 2, 3, 1, 2, 3])
+ans = 12
+\end{lstlisting}
+\begin{hint}
+Use the option ``descend'' to the \verb!sort! function.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function final_price = three_for_two_offer_many_items(list)
+
+list = sort(list);
+final_price = sum(list) - sum(list(1:3:end));
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Implement a function that takes a list as input and returns the mean value $\overline{x}$ and 
+standard deviation $\sigma$ of the elements in the list.
+Use the following definition of the standard deviation
+\begin{align}
+\sigma
+	& = \sqrt{\overline{x^2} - \overline{x}^2}
+\end{align}
+Use the functions from exercise \ref{exCalcMean} and
+\ref{exCalcSquaredMean}.
+
+The function signature should be:
+\begin{lstlisting}
+function [m, s] = getMeanAndStandardDeviation(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> getMeanAndStandardDeviation([-1, 7])
+ans = 3
+>> [m, s] = getMeanAndStandardDeviation([1])
+m = 1
+s = 0
+>> [m, s] = getMeanAndStandardDeviation([-1, 7])
+m = 3
+s = 4
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function [m, s] = getMeanAndStandardDeviation(list)
+
+m = calcMean(list);
+sqmean = calcSquaredMean(list);
+s = sqrt(sqmean - m^2);
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Implement a function that takes a list as input and returns a new list.
+The new list should contain two copies of each element in the input list.
+
+The function signature should be:
+\begin{lstlisting}
+function result = doubleListElements(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> doubleListElements([9]);
+>> doubleListElements([1, 2, 3])
+ans =  1     1     2     2     3     3
+>> doubleListElements([])
+ans = []
+>> doubleListElements([7.12])
+ans = 7.1200    7.1200
+\end{lstlisting}
+\begin{hint}
+Go over all items in the input list.
+For each item insert it twice in the output list.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function result = doubleListElements(list)
+
+result = []
+% Iterate over all values in the list
+for value = list
+    % Insert each value twice in the result list.
+    result = [result, value, value];
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Implement a function that takes a list as input and returns a new list.
+The new list should only contain half as many elements as the input list, 
+elements with even indices should be removed.
+
+The function signature should be:
+\begin{lstlisting}
+function result = decimateList(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> decimateList([1, 2, 3, 4])
+ans =  1     3
+>> decimateList([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
+ans = 1     2     3     4     4
+>> decimateList([1, 2])
+ans =1
+>> decimateList([1])
+ans = 1
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function result = decimateList(list)
+
+result = []
+% Iterate over list
+for idx = 1:length(list)
+    % If index is odd
+    if(mod(idx, 2) == 1)
+        % Insert the element in the result list
+        result = [result, list(idx)];
+    end
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Implement a function that takes a list as input and returns a new list.
+The new list should be the input list where the element ordering is reversed.
+
+The function signature should be:
+\begin{lstlisting}
+function result = reverseList(list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> reverseList([1]);
+>> reverseList([1])
+ans = 1
+>> reverseList([1, 2])
+ans = 2     1
+>> reverseList([1, 2, 3])
+ans = 3     2     1
+>> reverseList([1, 2, 3, -1])
+ans =  -1     3     2     1
+>> reverseList([])
+ans = []
+\end{lstlisting}
+\begin{hint}
+Go over all elements in the input list.
+Insert them in a new list (from the front), one element at
+a time.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function result = reverseList(list)
+
+result = [];
+% Iterate over all values in the list.
+for value = list
+    % Insert the current value at the front of the result list.
+    result = [value, result];
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Implement a function that takes a list and a parameter $n$ as 
+input and returns a new list.
+The new list should be the input list repeated $n$ times.
+
+The function signature should be:
+\begin{lstlisting}
+function result = repeatList(list, n)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> repeatList([], 3);
+>> repeatList([], 3)
+ans = []
+>> repeatList([1], 3)
+ans =  1     1     1
+>> repeatList([1], 0)
+ans = []
+>> repeatList([1, 2, 3], 3)
+ans =  1     2     3     1     2     3     1     2     3
+\end{lstlisting}
+\begin{hint}
+Create an empty list, in which the result should be stored.
+Append the input list to the result list and repeat this 
+the required number of times.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+function result = repeatList(list, n)
+
+result = [];
+% Repeat n times
+for count = 1:n
+    % Append the entire input list to the result list.
+    result = [result, list];
+end
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Implement a function that takes a list, an element to insert into the list and the location of the insertion.
+The return value is the list with the new element inserted at the specified position.
+
+The function signature should be:
+\begin{lstlisting}
+function result = insertElementAtLocation(list, element, position)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> insertElementAtLocation([1, 2, 3], 6, 2);
+>> insertElementAtLocation([1, 2, 3], 6, 6)
+Invalid position
+>> insertElementAtLocation([1, 2, 3], 6, 2)
+ans =  1     6     2     3
+>> insertElementAtLocation([], 6, 2)
+Invalid position
+>> insertElementAtLocation([], 6, 1)
+ans =   6
+>> insertElementAtLocation([2], 6, 1)
+ans = 6     2
+>> insertElementAtLocation([2], 6, 2)
+ans =  2     6
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Create a function which takes one input argument (a list of numbers)
+and returns the last five elements of this list. If the list does not contain five
+elements, the function should display a warning.
+
+The function signature should be:
+\begin{lstlisting}
+function res = lastFiveElements (list)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> lastFiveElements(1:10);
+>> lastFiveElements(1:10)
+ans = [6, 7, 8, 9, 10]
+>> lastFiveElements(7:10)
+warning: there is not enough elements in the list
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Create a function which takes two input argument: a list of numbers
+and a single number n and returns the last n elements of list. If list does not
+contain n elements, the function should display a warning.
+
+The function signature should be:
+\begin{lstlisting}
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+>> lastNElements(1:10, 3);
+>> lastNElements(1:10, 3)
+ans = [8, 9, 10]
+>> lastNElements(1:10, 10)
+ans = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+>> lastNElements(7:10, 5)
+warning: there is not enough elements in the list
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+ 

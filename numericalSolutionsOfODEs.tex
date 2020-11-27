@@ -1,0 +1,425 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Numerical solutions of differential equations}
+\SetExerciseDirectory{10_numerical_differential_equations}
+
+\subsection{For loops}
+
+Consider the task of adding all integers from 1 to 9
+and storing the result in the variable \verb!val!;  
+this can be achieved with the following code 
+\begin{lstlisting}
+val = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9
+\end{lstlisting}
+This is straightforward to write, but does not scale
+as well as possible.
+Adding all integers from 1 to 100 with a similar method
+is still possible although impractical.
+The task of adding all integers from 1 to 1000000 
+is impractical, so lets look at better ways of doing such 
+calculations.
+
+The first step to make the code easier to write, does the
+direct opposite thing; it makes the code much longer, but it 
+also gives it a more repeating structure, which soon will be 
+exploited 
+\begin{lstlisting}
+val = 0;
+val = val + 1;
+val = val + 2;
+val = val + 3;
+val = val + 4;
+val = val + 5;
+val = val + 6;
+val = val + 7;
+val = val + 8;
+val = val + 9;
+val
+\end{lstlisting}
+It still bothers me that the line where \verb!val! is updated
+changes from line to line.
+To avoid this a helper variable $k$ is introduced.
+Before each update of \verb!val! the value of $k$ is 
+increased by one and then the update rule can be used.
+\begin{lstlisting}
+val = 0;
+k = 1;
+val = val + k;
+k = 2;
+val = val + k;
+k = 3;
+val = val + k;
+k = 4;
+val = val + k;
+k = 5;
+val = val + k;
+k = 6;
+val = val + k;
+k = 7;
+val = val + k;
+k = 8;
+val = val + k;
+k = 9;
+val = val + k;
+val
+\end{lstlisting}
+To tell matlab to repeat the update rule \verb!val = val + k! for
+all values of $k$ from 1 to 9, the following code can be used:
+\begin{lstlisting}
+val = 0;
+for k = 1:9
+    val = val + k;
+end
+val
+\end{lstlisting}
+Compared with the first approach of manually typing
+all the integers in the range 1 to 9, it takes a bit more space, 
+but the code has become much easier to adapt to other problems.
+
+
+\begin{ex}\label{exSumIntegersUp100}%
+Determine the value of 
+\begin{align*}
+\sum_{k = 1}^{100} k = 1 + 2 + 3 + \ldots + 98 + 99 + 100
+\end{align*}
+In other words calculate the sum of all integers from 1 to 100.
+\begin{hint}
+A for loop will be a good structure to use.
+The answer is 5050.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+val = 0;
+for k = 1:100
+    val = val + k;
+end
+val
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+Determine the value of 
+\begin{align*}
+\sum_{k = 1}^{100} \sin(k) = \sin(1) + \sin(2) + \ldots + \sin(99) + \sin(100)
+\end{align*}
+\begin{hint}
+A for loop will be a good structure to use.
+The answer is -0.1272.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+val = 0;
+for k = 1:100
+    val = val + sin(k);
+end
+val
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Test the following expression by selecting a positive integer $n$
+and evaluate both sides of the expression using the selected value.
+\begin{align*}
+\sum_{i = 1}^n i = \frac{n \cdot (n + 1)}{2}
+\end{align*}
+Repeat this with three different value of $n$.
+\begin{hint}
+Look at the code from exercise \ref{exSumIntegersUp100}.
+It can be adapted to evaluate the left hand side of the expression.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+n = 234;
+val_left = 0;
+for k = 1:n
+    val_left = val_left + k;
+end
+val_left
+val_right = n * (n + 1) / 2
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Test the following expression by selecting a positive value $a$
+which is not one and an integer $n$
+and evaluate both sides of the expression using the selected value.
+\begin{align*}
+\sum_{i = 0}^n a^i = \frac{1 - a^{n + 1}}{1 - a}
+\end{align*}
+Repeat this with three different value of $n$.
+\begin{hint}
+Look at the code from exercise \ref{exSumIntegersUp100}.
+It can be adapted to evaluate the left hand side of the expression.
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+a = 1.2;
+n = 43;
+val_left = 0;
+for k = 0:n
+    val_left = val_left + a^k;
+end
+val_left
+val_right = (1 - a^(n + 1)) / (1 - a)
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\subsection{Numerical solutions of differential equations}
+
+Initial value problems, where a differential equation and 
+an initial condition are given, can be solved using numeric methods.
+Here it is assumed that the differential equation can be 
+written in the form
+\begin{align}
+\label{eqnDiffEquationForm}
+\frac{dy}{dx} = f(x, y(x))
+\end{align}
+
+\subsubsection{Euler's method}
+One of the methods that can be used to approximate the solution
+to the initial value problem is Euler's method.
+Euler's method is based on the approximation
+\begin{align*}
+\frac{dy}{dx} = \frac{y(x + h) - y(x)}{h}
+\end{align*}
+with a step size $h$.
+Combined with the differential equation
+\eqref{eqnDiffEquationForm}, this lead to the expression
+\begin{align*}
+\frac{y(x + h) - y(x)}{h} = f(x, y(x))
+\end{align*}
+by rearranging we obtain
+\begin{align*}
+y(x + h) = y(x) + h \cdot f(x, y(x))
+\end{align*}
+
+Lets look at the initial value problem given below
+\begin{align*}
+\frac{dy}{dx} = f(x, y(x)) = y	&& y(0) = 1
+\end{align*}
+To approximate the value of $y(1)$, we can use a single
+step with $h = 1$, or multiple steps with a smaller step
+length.
+First lets examine $h = 1$.
+\begin{align*}
+y(0) & = 1 \\
+y(1) & = y(0) + 1 \cdot f(0, y(0)) \\
+& = 1 + 1 \cdot f(0, 1) \\
+& = 1 + 1 \cdot 1 \\
+& = 2
+\end{align*}
+
+Then lets look at $h = 0.5$, now two steps are required to 
+estimate the value of $y(1)$.
+\begin{align*}
+y(0) & = 1 \\
+y(0.5) & = y(0) + 0.5 \cdot f(0, y(0)) \\
+& = 1 + 0.5 \cdot f(0, 1) \\
+& = 1 + 0.5 \cdot 1 \\
+& = 1.5 \\
+y(1.0) & = y(0.5) + 0.5 \cdot f(0, y(0.5)) \\
+& = 1.5 + 0.5 \cdot f(0, 1.5) \\
+& = 1 + 0.5 \cdot 1.5 \\
+& = 2.25
+\end{align*}
+
+When comparing the two approximations for $y(1)$, 
+we see that they differ quite much (2 vs. 2.25).
+This difference is caused by the approximation error of the method.
+The approximation error is reduced when the step length is reduced.
+
+
+\begin{ex}[Eulers method]%
+Implement Euler's method.
+The function containing the implementation should
+have the signature:
+\begin{lstlisting}
+function [yvals, fcalls] = eulers_method(fnc, xvals, y0)
+% Uses the Euler method for approximating the first order
+% differential equation defined by the function handle fnc.
+%
+% Input values:
+% - fnc Function handle to a function which takes two
+% input arguments and returns a scalar value.
+% Eg. @(x, y) (y+sin(x))
+% - xvals List of x values where the corresponding y
+% values should be calculated.
+% - y0 Initial state of the dependent function.
+%
+% Output values:
+% - yvals Approximation of y(x) at the locations
+% specified in xvals.
+% - fcalls Number of function evaluations.
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> [yvals, fevals] = eulers_method(@(x, y) y, [0:5], 1)
+yvals = 1 2 4 8 16 32
+fevals = 5
+>> eulers_method(@(x, y) y, [0:5], 2)
+ans = 2 4 8 16 32 64
+>> eulers_method(@(x, y) 0.1*y, [0:5], 1)
+ans = 1.0000 1.1000 1.2100 1.3310 1.4641 1.6105
+>> eulers_method(@(x, y) 0.1*y+0.2*x, [0:5], 1)
+ans = 1.0000 1.1000 1.4100 1.9510 2.7461 3.8207
+\end{lstlisting}
+\begin{hint}
+No hint provided yet.
+\end{hint}
+\begin{sol}
+No solution provided yet.
+\begin{lstlisting}
+function [yvals, fevals] = eulers_method(fh, xvals, y0)
+%EULERS_METHOD Solves differential equations numerically.
+
+fevals = 0;
+
+% Preallocate array for yvalues (increases speed)
+yvals = xvals;
+
+% Set the initial y value
+yvals(1) = y0;
+
+% Set current values
+curx = xvals(1);
+cury = y0;
+
+% Update the current values step by step using Eulers method.
+for idx = 2:length(xvals)
+    newx = xvals(idx);
+    derivative = fh(curx, cury);
+    fevals = fevals + 1;
+    dx = newx - curx;
+    dy = derivative * dx;
+    curx = newx;
+    cury = cury + dy;
+    yvals(idx) = cury;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+\label{excEulerConvergence} \\
+For the initial value problem
+\begin{align}
+y'(t)
+	& = 1.2 \cdot y(t) 	&
+y(0) = 1
+\end{align}
+Determine the analytic solution and calculate the exact value of $y(3)$.
+Use Euler's method to approximate $y(3)$ with different step lengths $h$.
+How is the error related to the used step length?
+\begin{hint}
+No hint provided yet.
+\end{hint}
+\begin{sol}
+No solution provided yet.
+\end{sol}
+\end{ex}
+
+
+\subsection{Heun's method}
+
+Euler's method is rather simple to implement, however the 
+error in its approximations are quite large for a certain step 
+length.
+There exist methods with a much lower error and here we will look 
+at one of them, Heun's method.
+The method is based on the following rules:
+\begin{align*}
+\tilde{y}(x + h) & = y(x) + h \cdot f(x, y(x)) \\
+y(x + h) & = y(x) + \frac{h}{2} \left[f(x, y(x)) + f(x + h, \tilde{y}(x + h))\right]
+\end{align*}
+
+
+
+
+\begin{ex}[Heun's method]%
+Implement Heuns's method.
+The function containing the implementation should
+have the signature:
+\begin{lstlisting}
+function [yvals, fcalls] = heuns_method(fnc, xvals, y0)
+% Uses Heun's method for approximating the first order
+% differential equation defined by the function handle fnc.
+%
+% Input values:
+% - fnc Function handle to a function which takes two
+% input arguments and returns a scalar value.
+% Eg. @(x, y) (y+sin(x))
+% - xvals List of x values where the corresponding y
+% values should be calculated.
+% - y0 Initial state of the dependent function.
+%
+% Output values:
+% - yvals Approximation of y(x) at the locations
+% specified in xvals.
+% - fcalls Number of function evaluations.
+\end{lstlisting}
+Example usage of the function:
+\begin{lstlisting}
+>> [yvals, fevals] = heuns_method(@(x, y) y, [0:5], 1)
+yvals = 1.0000    2.5000    6.2500   15.6250   39.0625   97.6562
+fevals = 10
+>> heuns_method(@(x, y) y, [0:5], 2)
+ans = 2.0000    5.0000   12.5000   31.2500   78.1250  195.3125
+>> heuns_method(@(x, y) 0.1*y, [0:5], 1)
+ans = 1.0000    1.1050    1.2210    1.3492    1.4909    1.6474
+>> heuns_method(@(x, y) 0.1*y+0.2*x, [0:5], 1)
+ans = 1.0000    1.2050    1.6415    2.3339    3.3089    4.5964
+\end{lstlisting}
+\begin{hint}
+No hint provided yet.
+\end{hint}
+\begin{sol}
+No solution provided yet.
+\begin{lstlisting}
+function [yvals, fevals] = eulers_method(fh, xvals, y0)
+%EULERS_METHOD Solves differential equations numerically.
+
+fevals = 0;
+
+% Preallocate array for yvalues (increases speed)
+yvals = xvals;
+
+% Set the initial y value
+yvals(1) = y0;
+
+% Set current values
+curx = xvals(1);
+cury = y0;
+
+% Update the current values step by step using Eulers method.
+for idx = 2:length(xvals)
+    newx = xvals(idx);
+    derivative = fh(curx, cury);
+    fevals = fevals + 1;
+    dx = newx - curx;
+    dy = derivative * dx;
+    curx = newx;
+    cury = cury + dy;
+    yvals(idx) = cury;
+end
+
+end
+\end{lstlisting}
+\end{sol}
+\end{ex}
+ 

@@ -1,0 +1,20 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{How to solve second order differential equations numerically}
+
+Fortæl om ode45 og giv eksempler pá brug ap denne solver. Naun også deval
+Vis huordan ct andet ordens differentiol ligning kan omsknies tic to koblede forste ordens diffferential liqninger.
+\begin{align*}
+y^{\prime \prime}=f\left(x, y, y^{\prime}\right)
+\end{align*}
+Introducer \(\quad V=y^{\prime} \rightarrow v^{\prime}=y^{\prime \prime}\)
+\begin{align*}
+v^{\prime}&=f(x, y, v) \\
+y^{\prime}&=\ddot{v}^{\prime}
+\end{align*}
+Nu er der to ligninger der er koblede.
+
+Vis hvordan de lases numen'st.
+ 

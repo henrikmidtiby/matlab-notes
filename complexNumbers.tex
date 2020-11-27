@@ -1,0 +1,175 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Complex numbers}
+
+\begin{ex}
+Check some of your calculations on the exercise sheet about complex
+numbers using matlab.
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\begin{ex}
+Plot the two complex numbers $a = 4 + i$ and 
+$b = 2 \cdot e^{i \pi / 3}$ and their
+product in the same Argand diagram.
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+% Enter values.
+a = 4 + 1*i;
+b = 2*exp(i*pi/3);
+
+% Plot values
+figure(1);
+values = [0, a, b, a*b];
+plot(real(values), imag(values), 'o');
+axis equal;
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+\begin{ex}
+Copy the code below into a file and try to run it a few times.
+\begin{lstlisting}
+figure(1);
+clf
+hold off;
+extend = 4;
+xlim([-extend, extend]);
+ylim([-extend, extend]);
+hold on;
+plot([-extend, extend], [0, 0], '-k');
+plot([0, 0], [-extend, extend], '-k');
+z1 = ginput(1) * [1; 1i];
+plot([0, real(z1)], [0, imag(z1)], '.-r', 'MarkerSize', 10);
+z2 = ginput(1) * [1; 1i];
+plot([0, real(z2)], [0, imag(z2)], '.-r', 'MarkerSize', 10);
+z3 = z1 * z2;
+plot([0, real(z3)], [0, imag(z3)], '-b', 'MarkerSize', 10);\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+The function signature should be:
+\begin{lstlisting}
+%% 
+% Write complex numbers in matlab
+a = 3 + 4*i
+b = 2 * exp(i*1)
+
+
+%%
+% Standard operations on complex numbers
+a + b
+a - b
+a * b
+a / b
+
+
+%%
+% Conversion of complex numbers to and from polar form.
+
+% Determine modulus and argument.
+abs(a)
+angle(a)
+
+% Determine real and imaginary parts.
+real(b)
+imag(b)
+
+
+
+
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+\subsection{Functions}
+
+\begin{ex}
+\begin{lstlisting}
+%%
+% Testing the square root function.
+% Can you improve the function, so the result is more accurate?
+x = square_root(5)
+x*x
+
+x = square_root(10)
+x*x
+
+x = square_root(50)
+x*x
+
+
+%%
+a = 4;
+if(a > 3)
+    disp('Hello');
+end
+
+%%
+k = 4;
+x = 0;
+while(x < k)
+    disp(x);
+    x = x + 1;
+end
+
+%%
+x = input('Specify a positive integer: ');
+k = 2;
+while(k < x)
+    if(mod(x, k) == 0)
+        disp('The number is not prime, a divisor is: ');
+        disp(k);
+        %break;
+    end
+    k = k + 1;
+end
+if(k == x)
+    disp('The number is a prime');
+end
+
+
+
+mod(6, 4)
+\end{lstlisting}
+Use the following examples to test the function:
+\begin{lstlisting}
+\end{lstlisting}
+\begin{hint}
+\end{hint}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+ 
