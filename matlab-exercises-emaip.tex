@@ -35,35 +35,12 @@
    showspaces=false,
    showstringspaces=false}
 
+
+\usepackage{exerciseshintsandsolutionsbasedonanswers}
+
+
 \newcommand{\moved}{\todo[inline]{The exercise above has been moved to matlab with unittests.}}
 
-
-% Fix for moving the hypertarget one line up.
-% https://tex.stackexchange.com/a/412381/1366
-\makeatletter
- \newcommand{\linkdest}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
-\makeatother
-
-\newcounter{ex}
-\numberwithin{ex}{section}
-
-\newenvironment{ex}[1][]{%
-%\filbreak
-\medbreak
-\refstepcounter{ex}
-\noindent
-\textbf{\linkdest{\theex{}exercise}{}Exercise \theex{}: #1\hfill\hyperlink{\theex{}hint}{hint}, \hyperlink{\theex{}solution}{solution}}\par\noindent}{}
-
-\Newassociation{sol}{Solution}{ans}
-\Newassociation{hint}{Hint}{hnt}
-
-
-% Redefine the Hint and Solution environment.
-\renewenvironment{Hint}[1]{{\filbreak\par\noindent\linkdest{#1{}hint}{}\bf Exercise \hyperlink{#1{}exercise}{#1}:}\newline}{\bigskip}
-\renewenvironment{Solution}[1]{{\filbreak\par\noindent\linkdest{#1{}solution}{}\bf Exercise \hyperlink{#1{}exercise}{#1}:}\newline}{\bigskip}
-
-\Opensolutionfile{ans}[ans]
-\Opensolutionfile{hnt}[hints]
 
 % Macros for writing solutions and unittests to files
 % in the exercises subdirectory.
@@ -89,9 +66,17 @@
 \title{Matlab exercises for E-MAIP 2019}
 \date{\today}
 
-%\includeonly{}
+%\includeonly{matlabasacalculator}
 
 \begin{document}
+
+\Opensolutionfile{answers}
+\Opensolutionfile{hints}
+\Opensolutionfile{secondhints}
+\Opensolutionfile{thirdhints}
+
+
+
 \maketitle
 
 \newpage
@@ -101,14 +86,28 @@
 \section*{Introduction}
 
 These notes are used in the course \emph{Mathematics and Introduction to programming}
-that is taught on University of Southern Denmark during fall 2019.
+that is taught on University of Southern Denmark during fall 2021.
+The notes introduce students to version control with git and
+the Matlab programming environment.
 
-The source for this document is available on github, 
-\url{https://github.com/henrikmidtiby/matlab-notes}.
+\hfill Henrik Skov Midtiby
 
 
+\vspace{2cm}
+
+
+\begin{quote}
+A computer is like a mischievous genie. 
+It will give you exactly what you ask for, 
+but not always what you want.
+\end{quote}
+\hfill Joe Sondow
+
+\include{matlabasacalculator}
 \include{settingGitUpOnWindows}
+\include{functionsinmatlab}
 \include{matlabIntroduction}
+\include{plotting}
 \include{complexNumbers}
 \include{matlabRefresher}
 \include{fittingModelsToData}
@@ -120,14 +119,18 @@ The source for this document is available on github,
 \include{theMinHeapDataStructure}
 \include{solveSecondOrderDiffEquationsNumerically}
 \include{numericalRootFinding}
-\include{plotting}
+\include{plottingExperimentalData}
 \include{randomNumberGeneration}
 
 
 
+\section{Warnings and errors}
+
+\url{https://se.mathworks.com/help/matlab/matlab_prog/issue-warnings-and-errors.html}
 
 
 \section{Loose ends}
+
 
 
 \todo[inline]{Add exercises about secret sharing. Get inspiration from this video: Secret Sharing Explained Visually \url{https://www.youtube.com/watch?v=iFY5SyY3IMQ}}
@@ -144,9 +147,14 @@ The source for this document is available on github,
 
 \todo[inline]{Lav en opgave om at lave slope plots i matlab.}
 
-\Closesolutionfile{hnt}
-\Closesolutionfile{ans}
+\todo[inline, caption={Implement cosine approximation}]{Idea for some exercises on if and taylor series.
+\url{https://web.eecs.utk.edu/~azh/blog/cosine.html}}
 
+
+\Closesolutionfile{answers}
+\Closesolutionfile{hints}
+\Closesolutionfile{secondhints}
+\Closesolutionfile{thirdhints}
 
 \newpage
 \section{Hints}
@@ -155,7 +163,7 @@ The source for this document is available on github,
 
 \newpage
 \section{Solutions}
-\input{ans}
+\input{answers}
 
 
 \newpage
@@ -165,6 +173,8 @@ Beginning Matlab Exercises, by R. J. Braun:
 \url{http://www.math.udel.edu/~braun/M349/Matlab_probs2.pdf}
 
 \url{http://kom.aau.dk/~borre/matlab7/exercise.pdf}
+
+
 
 
 \end{document}

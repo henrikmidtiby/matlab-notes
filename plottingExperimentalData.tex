@@ -1,0 +1,26 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Plotting experimental data}
+
+When dealing with experimental data, the data should
+first be loaded into Matlab and then a suitable
+subset of the data should be selected for plotting.
+In some cases it might be beneficial to normalise the 
+data to simplify later comparisons.
+
+\begin{lstlisting}
+% Indlaesning af data fra en .csv-fil.
+A = dlmread('10.08 ohm resistans.csv');
+
+% Udtraek af vaerdier fra kolonner
+x = A(:, 1);
+y = A(:, 2);
+% Udvaelg de vaerdier som modellen skal fittes til.
+idx = (x > 1.5724) & (x < 1.58);
+x = x(idx);
+y = y(idx);
+% Flyt observationerne langs med x aksen, saa den foerste x-vaerdi er nul.
+x = x - x(1);
+\end{lstlisting}

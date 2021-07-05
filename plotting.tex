@@ -58,6 +58,73 @@ command \verb!hold off! or by clearing the figure using the
 command \verb!clf!.
 
 
+\subsection{Plotting constant values}
+
+To visualize an equation like $0.5 = \sin(x)$, 
+both sides of the equation can be plotted.
+Solutions to the equation is then found 
+where the two plotted lines intersect.
+
+However the direct approach for plotting the two sides of the
+equations does not work.
+The code below will only plot the right hand side of the equation.
+\begin{lstlisting}
+figure(1);
+clf; 
+hold on;
+x = linspace(-2, 7);
+plot(x, sin(x));
+plot(x, 0.5);
+\end{lstlisting}
+The issue is the line
+\begin{lstlisting}
+plot(x, 0.5);
+\end{lstlisting}
+As the number of x coordinates and y coordinates does not match, 
+Matlab is not able to plot the function with the constant value.
+The solution is to modify the code as follows:
+\begin{lstlisting}
+plot(x, 0.5+0*x);
+\end{lstlisting}
+The idea is that by adding \verb!0*x! to the constant value, 
+it is changed from a single value, to a list of values with the same
+number of elements as the vector \verb!x!.
+
+
+
+\subsection{Locate points in a plot}
+\label{ssecLocatePointsInAPlot}
+
+Sometimes it is practical to get a precise location 
+of something that is seen in a plot.
+If you for instance want to find a graphical solution to 
+the equation
+\begin{align*}
+e^{-x^2} = 0.2x + 0.5
+\end{align*}
+the two sides of the equation can be plotted
+in the same figure with the commands.
+\begin{lstlisting}
+figure(1);
+clf; 
+x = linspace(-3, 3);
+fh_left = @(x) exp(-x.^2);
+fh_right = @(x) 0.2*x + 0.5;
+plot(x, fh_left(x));
+hold on;
+plot(x, fh_right(x));
+\end{lstlisting}
+When the figure is shown, you can now issue the command
+\begin{lstlisting}
+solutions = ginput(3)
+\end{lstlisting}
+which will put the figure in focus and show a cross hair 
+with which you can click on the three locations where the 
+two curves intersect.
+The $x$,  $y$ coordinates of the locations that were clicked is 
+then saved in the variable \verb!solutions!.
+
+
 \subsection{Adding information to plots}
 \label{ssecAddingInformationToPlots}
 
@@ -124,6 +191,35 @@ print('subplot_example_1.png', '-dpng', '-r300');
 In the example the print command takes a filename as input 
 as well two options specifying the fileformat (png) 
 and resolution of the exported image.
+
+
+\subsection{Aspect ratio}
+
+\begin{wrapfigure}{r}{6cm}
+\includegraphics[width=6cm]{pic/plotting/aspect_ratio_free.png}
+\includegraphics[width=6cm]{pic/plotting/aspect_ratio_equal.png}
+\end{wrapfigure}
+When plotting coordinates (either real world coordinates in meters
+or coordinates in the complex plane), it is good practice to 
+ensure that the scaling of the $x$-axis and the $y$-axis is equal.
+This makes circles appear as circles instead of ellipses in the plot.
+To enforce that the axes are scaled equally, use the matlab
+command \verb!axis equal!, as demonstrated in the code snippet
+below.
+The effect is shown on the plot to the right.
+
+\begin{lstlisting}
+theta = linspace(0, 2*pi);
+x = sin(theta);
+y = cos(theta);
+figure(1);
+plot(x, y)
+figure(2);
+plot(x, y);
+axis equal;
+\end{lstlisting}
+
+
 
 
  

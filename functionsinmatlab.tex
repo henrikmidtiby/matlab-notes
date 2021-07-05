@@ -1,0 +1,47 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Functions in Matlab}
+
+
+Write the text for this chapter with the exercises in the folder
+\verb!exercises_with_unittests/01_functions! in mind.
+This also means that the unit testing framework should be introduced (only introduce how it is used).
+
+Functions are the building blocks of programming languages.
+We have already used several of the built in functions 
+in Matlab (sqrt, linspace, plot, \ldots). 
+By creating your own functions you can extend the functionality of 
+Matlab while making it easier to keep an overview of your program.
+
+Functions are especially useful when you need to repeat a calculation 
+multiple times.
+As an example lets look at how to find the determinant and the two solutions 
+to the following quadratic equation: 
+\begin{align*}
+x^2 + 2x + 4 &= 0 
+%x^2 + 4x - 1 &= 0 \\
+%4x^2 - 5x + 3 &= 0
+\end{align*}
+This can be achieved with the Matlab code shown below.
+\begin{verbatim}
+>> A = 1; 
+>> B = 2; 
+>> C = -4;
+>> D = B^2 - 4 * A * C
+D =
+    20
+>> x1 = (-B - sqrt(D)) / (2*A)
+x1 =
+   -3.2361
+>> x2 = (-B + sqrt(D)) / (2*A)
+x2 =
+    1.2361
+\end{verbatim}
+
+
+
+\subsection{Creating functions}
+
+

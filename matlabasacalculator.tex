@@ -1,0 +1,267 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdfLaTeX
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\section{Matlab as a calculator}
+
+\newcommand{\known}[1]{\todo[inline, color=green!20, nolist]{New commands: \texttt{#1}}}
+
+The simplest way of using Matlab, is as a basic pocket calculator, where an
+expression is entered and Matlab then calculates the value of the expression.
+Such an interaction looks like:
+\begin{verbatim}
+>> 1+2*3
+ans =
+     7
+\end{verbatim}
+Multiple things are happening here, so lets take a closer look at each of the
+elements.
+The prompt \verb!>>! is the first thing to recognize.
+This prompt tells the user, that Matlab is waiting for some input to work on.
+In this case the user then entered the expression \verb!1+2*3! and pressed 
+\verb!enter!.
+The response from Matlab is divided over two lines and contains the following 
+\verb!ans = 7!.
+When Matlab calculates a value, the value is stored in a variable.
+If no variable name is specified, the default variable name \verb!ans! is used, 
+this is the case here.
+So Matlab tells us that the value of the entered expression has the value 7.
+
+
+
+\todo[inline]{Write a about how to use Matlab as a pocket calculator.}
+
+
+\begin{ex}
+For each line of code below, state what value will be saved in each variable.
+\begin{verbatim}
+a = 1;             % a = 
+b = 1;             % a =    b = 
+c = a + b;         % a =    b =    c = 
+a = b;             % a =    b =    c = 
+b = c;             % a =    b =    c = 
+c = a + b;         % a =    b =    c = 
+a = b;             % a =    b =    c = 
+b = c;             % a =    b =    c = 
+c = a + b;         % a =    b =    c = 
+\end{verbatim}
+\begin{sol}
+\begin{verbatim}
+a = 1;             % a = 1
+b = 1;             % a = 1  b = 1 
+c = a + b;         % a = 1  b = 1  c = 2
+a = b;             % a = 1  b = 1  c = 2
+b = c;             % a = 1  b = 2  c = 2
+c = a + b;         % a = 1  b = 2  c = 3
+a = b;             % a = 2  b = 2  c = 3
+b = c;             % a = 2  b = 3  c = 3
+c = a + b;         % a = 2  b = 3  c = 5
+\end{verbatim}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Calculate $5 + 3 \cdot 10$\\
+Calculate the sum of 5 + 3 and multiply this sum with 10\\
+Calculate 10 - 16/4\\
+Calculate the difference 10 - 16 and divide this difference with 4
+\begin{hint}
+Just write it as you would on a normal calculator, eg. a TI Inspire.
+\begin{verbatim}
+5 + 3 * 10
+\end{verbatim}
+\end{hint}
+\end{ex}
+\known{+, -, *, /}
+
+\begin{ex}
+Assign the value 2 to the variable $x0$ and hide the answer from this intermediate
+calculation.\\
+Assign the variable $x1$ the value of $3 \cdot x0^2$ + 4 and divide with 4. Check if the answer to
+this calculation is correct (you do not need a pocket calculator to do this).
+\end{ex}
+\known{=, \^}
+
+
+\begin{ex}
+Solve the second order polynomial
+\begin{align}
+A x^2 + B x + C = 0
+\end{align}
+using the formula
+\begin{align}
+D & = B^2 - 4 \cdot A \cdot C	\\
+X & = \frac{-B\pm \sqrt{D}}{2 \cdot A}
+\end{align}
+Use the following values for A, B and C.\\ \noindent
+(A, B, C) = (1, 2, 4), (1, 4, -1), (4, -5, 3), (25, 12, 0), (34, 0, 0) and (0, 2, 0).
+\end{ex}
+\known{sqrt}
+
+\begin{ex}
+Get the value of e and $\pi$ from Matlab.
+\end{ex}
+\known{exp, pi}
+
+\begin{ex}
+Calculate $\sin(3/4\pi)$, $\cos(3/4 \cdot \pi)$, $\tan(3/4 \cdot \pi)$ and $\cot(3/4 \cdot \pi)$.
+\end{ex}
+\known{sin, cos, tan, cot}
+
+\begin{ex}
+Define and print to screen the parameters x and y, where x has to have the values 0, 1,
+2, 3, 4, 5, 6, 7, 8, 9, 10 and y has to have the values 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5,
+5.\\
+Create a Cartesian plot of y against x.
+\end{ex}
+\known{plot}
+
+
+\begin{ex}
+Define the parameter $x$, where $x$ have to contain $N$ values equally spaced between $0$
+and $1$. Use either the built-in function \texttt{linspace} or colon notation.\\
+Define a variable $y$ equal to $\cos(4\cdot \pi \cdot x)$.\\
+First use $N = 5$ and create a Cartesian plot of $y$ against $x$.\\
+Then increase $N$ until you get a smooth plot of the function $y$.
+\end{ex}
+\known{linspace, :}
+
+\begin{ex}
+Define the two row vectors $\vec{v}$ and $\vec{u}$:
+\begin{align*}
+\vec{v} = (1, 2, 3) \qquad \vec{u} = (3, 4, 1)
+\end{align*}
+and determine their 
+sum ($\vec{v} + \vec{u}$),
+difference ($\vec{v} - \vec{u}$),
+dot product ($\vec{v} \cdot \vec{u}$) and
+cross product ($\vec{v} \times \vec{u}$).
+In addition compute the elementwise product, division, power of 2 and 
+the transposed and length of the two vectors.
+\end{ex}
+\known{[\ldots], .*, ./, .\^{}2, .', transpose}
+
+
+\begin{ex}
+Define the two matrices
+\begin{align*}
+\textrm{AMAT} = \begin{pmatrix}
+1 &2 &3	\\
+2 &4 &6	\\
+1 &2 &5
+\end{pmatrix}
+\qquad
+\textrm{BMAT} =
+\begin{pmatrix}
+1 &0 &0	\\
+2 &4 &6	\\
+2 &2 &0
+\end{pmatrix}
+\end{align*}
+And calculate their product AMAT $\cdot$ BMAT, element wise product of AMAT times BMAT, sum
+AMAT+BMAT, transposed, inverted, determinants, sizes, column and row numbers.
+\end{ex}
+\known{[,;], \^{}-1, inv, det, size}
+
+
+\begin{ex}
+Use the matrices from the previous exercise. What is the value of \verb!AMAT(5)! and why?
+\end{ex}
+
+
+\begin{ex}
+Construct an Identity Matrix $I_{5\times5}$ and a diagonal matrix
+\begin{align*}
+\textrm{CMAT} = \begin{pmatrix}
+2 &0 &0 &0 &0	\\
+0 &4 &0 &0 &0	\\
+0 &0 &7 &0 &0	\\
+0 &0 &0 &0.5 &0	\\
+0 &0 &0 &0 &1	
+\end{pmatrix}
+\end{align*}
+And calculate their product $I_{5 \times 5} \cdot \textrm{CMAT}$.
+\end{ex}
+\known{eye, diag}
+
+
+\begin{ex}
+Solve the set of linear equations
+\begin{align*}
+1	& = 5x + 2y	\\
+0	& = -x + y + 3z + 2v	\\
+-10 	& = x + 3y - 4z + v	\\
+0	& = -2x + 3z - 2v 
+\end{align*}
+\end{ex}
+\known{$\backslash$}
+
+
+
+
+\subsection{Plot of functions}
+
+\begin{ex}
+Plot the function $f(x) = \cos(x) + 3 \cdot \sin(3 \cdot x)$
+over the $x$ range $[-2, 2]$.
+Use the following template 
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(0, 10, 100);
+
+% Calculate the associated y value
+y = sin(x);
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(-2, 2, 100);
+
+% Calculate the associated y value
+y = cos(x) + 3*sin(3*x);
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\end{sol}
+\end{ex}
+
+
+
+\begin{ex}
+Plot the function $f(x) = 1 / (1.1 + \sin(4 \cdot x))$
+over the interval $x \in [-3, 3]$.
+\begin{sol}
+A solution is:
+\begin{lstlisting}
+% Create evenly distributed x values that covers the range
+x = linspace(-3, 3, 100);
+
+% Calculate the associated y value
+y = 1 ./ (1.1 + sin(4*x));
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{lstlisting}
+\end{sol}
+\begin{solutionfile}{plot}
+% Create evenly distributed x values that covers the range
+x = linspace(-3, 3, 100);
+
+% Calculate the associated y value
+y = 1 ./ (1.1 + sin(4*x));
+
+% Open a figure and plot the associated x and y values
+figure(1);
+plot(x, y);
+\end{solutionfile}
+\end{ex}

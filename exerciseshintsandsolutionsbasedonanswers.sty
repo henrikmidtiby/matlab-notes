@@ -1,0 +1,56 @@
+% !TeX root = matlab-exercises-emaip.tex
+% !TeX spellcheck = en_GB
+\usepackage{answers}
+\usepackage[colorlinks, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+
+
+\Newassociation{sol}{Solution}{answers}
+\Newassociation{hint}{Hint}{hints}
+% Determine sorting of hints by using one of the two lines below
+% All hints for one exercise next to each other
+%\Newassociation{secondhint}{SecondHint}{hints}
+%\Newassociation{thirdhint}{ThirdHint}{hints}
+% Hints distributed in multiple locations for each exercise.
+\Newassociation{secondhint}{SecondHint}{secondhints}
+\Newassociation{thirdhint}{ThirdHint}{thirdhints}
+
+
+\newcounter{exercise}
+\numberwithin{exercise}{section}
+
+\newcounter{hint}
+\numberwithin{hint}{exercise}
+
+\NewDocumentEnvironment{ex}{O{}}{\medskip\refstepcounter{exercise}\hypertarget{ex:\theexercise}{}\noindent\textbf{Exercise \theexercise}
+\hfill
+\CreateLinkIfTargetExist{hint1:\theexercise}{~hint}%
+\CreateLinkIfTargetExist{hint2:\theexercise}{~hint}%
+\CreateLinkIfTargetExist{hint3:\theexercise}{~hint}%
+\CreateLinkIfTargetExist{sol:\theexercise}{~solution}
+\par\nopagebreak\noindent\ignorespaces}{}
+
+\renewenvironment{Solution}[1]{\leavevmode\unskip\hypertarget{sol:#1}{}\textbf{Solution to #1}\hfill\hyperlink{ex:#1}{Back to exercise #1}\par\nopagebreak\noindent\ignorespaces}{\medskip\par\noindent}
+
+%\RenewDocumentEnvironment{Solution}{m}{\leavevmode\unskip\hypertarget{sol:#1}{}\textbf{Solution to #1}\hfill\hyperlink{ex:#1}{Back to exercise #1}\par\nopagebreak\noindent\ignorespaces}{\medskip\par\noindent}
+
+\renewenvironment{Hint}[1]{\leavevmode\unskip\hypertarget{hint1:#1}{}\textbf{First hint to #1}\hfill\hyperlink{ex:#1}{Back to exercise #1}\par\nopagebreak\noindent\ignorespaces}{\medskip\par\noindent}
+
+\renewenvironment{SecondHint}[1]{\leavevmode\unskip\hypertarget{hint2:#1}{}\textbf{Second hint to #1}\hfill\hyperlink{ex:#1}{Back to exercise #1}\par\nopagebreak\noindent\ignorespaces}{\medskip\par\noindent}
+
+\renewenvironment{ThirdHint}[1]{\leavevmode\unskip\hypertarget{hint3:#1}{}\textbf{Third hint to #1}\hfill\hyperlink{ex:#1}{Back to exercise #1}\par\nopagebreak\noindent\ignorespaces}{\medskip\par\noindent}
+
+
+
+
+% Trick for remembering which hypertargets that have been
+% inserted.
+\let\oldhypertarget\hypertarget
+\let\oldhyperlink\hyperlink
+\renewcommand{\hypertarget}[2]{%
+  \label{ht@#1}\oldhypertarget{#1}{#2}%
+}
+\renewcommand{\hyperlink}[2]{%
+  \ifcsname r@ht@#1\endcsname\oldhyperlink{#1}{#2}\else#2\fi
+}
+
+\NewDocumentCommand{\CreateLinkIfTargetExist}{mm}{\ifcsname r@ht@#1\endcsname\hyperlink{#1}{#2}\else\fi} 
