@@ -27,6 +27,23 @@ If no variable name is specified, the default variable name \verb!ans! is used,
 this is the case here.
 So Matlab tells us that the value of the entered expression has the value 7.
 
+Often it is handy to save the result of a calculation in a variable.
+This makes it possible to use the result in future calculations.
+To calculate the mean value of four values, the following code can be used:
+\begin{verbatim}
+>> sum_of_values = 3 + 4 + 5 + 6
+sum_of_values = 
+     18
+>> mean_value = sum_of_values / 4
+mean_value =
+     4.5000
+\end{verbatim}
+To access the value stored in a variable, we have to write the name of the variable.
+\begin{verbatim}
+>> sum_of_values
+sum_of_values = 
+     18
+\end{verbatim}
 
 
 \todo[inline]{Write a about how to use Matlab as a pocket calculator.}
@@ -73,6 +90,29 @@ Just write it as you would on a normal calculator, eg. a TI Inspire.
 5 + 3 * 10
 \end{verbatim}
 \end{hint}
+\begin{secondhint}
+Remember to add parentheses, to control the order of the calculations
+\begin{verbatim}
+(5 + 3) * 10
+\end{verbatim}
+\end{secondhint}
+\begin{sol}
+A solution is
+\begin{verbatim}
+>> 3 + 5 * 10
+ans = 
+     53
+>> (3 + 5) * 10
+ans = 
+     80
+>> 10 - 16 / 4
+ans = 
+     6
+>> (10 - 16) / 4
+ans = 
+     -1.5000
+\end{verbatim}
+\end{sol}
 \end{ex}
 \known{+, -, *, /}
 
