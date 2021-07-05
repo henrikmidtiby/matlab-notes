@@ -1,4 +1,5 @@
 .gitignore.swp
+*.aux
 2019-11-25 Matlab exercises.pdf
 ans.log
 ans.tex
@@ -25,3 +26,7 @@ matlab-exercises-emaip.pdf
 matlab-exercises-emaip.synctex.gz
 matlab-exercises-emaip.thm
 matlab-exercises-emaip.toc
+answers.tex
+secondhints.tex
+thirdhints.tex
+*.log
