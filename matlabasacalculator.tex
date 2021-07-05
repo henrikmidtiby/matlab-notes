@@ -9,11 +9,11 @@
 The simplest way of using Matlab, is as a basic pocket calculator, where an
 expression is entered and Matlab then calculates the value of the expression.
 Such an interaction looks like:
-\begin{verbatim}
+\begin{lstlisting}
 >> 1+2*3
 ans =
      7
-\end{verbatim}
+\end{lstlisting}
 Multiple things are happening here, so lets take a closer look at each of the
 elements.
 The prompt \verb!>>! is the first thing to recognize.
@@ -30,54 +30,53 @@ So Matlab tells us that the value of the entered expression has the value 7.
 Often it is handy to save the result of a calculation in a variable.
 This makes it possible to use the result in future calculations.
 To calculate the mean value of four values, the following code can be used:
-\begin{verbatim}
+\begin{lstlisting}
 >> sum_of_values = 3 + 4 + 5 + 6
 sum_of_values = 
      18
 >> mean_value = sum_of_values / 4
 mean_value =
      4.5000
-\end{verbatim}
+\end{lstlisting}
 To access the value stored in a variable, we have to write the name of the variable.
-\begin{verbatim}
+\begin{lstlisting}
 >> sum_of_values
 sum_of_values = 
      18
-\end{verbatim}
+\end{lstlisting}
+To hide the calculated value, expressions can be terminated by a semicolon \verb!;!.
+An expression that is ended by a semicolon is still evaluated and the value stored in the
+specified variable, but the calculated value is not shown.
+\begin{lstlisting}
+>> sum_of_values = 3 + 4 + 5 + 6;
+>> mean_value = sum_of_values / 4
+mean_value =
+     4.5000
+\end{lstlisting}
+
+To make Matlab ignore the rest of a line, insert the percentage 
+character \verb!%!. 
+This is used to add comments to the matlab code.
+\begin{lstlisting}
+>> % Calculate mean value by calculating the sum of the values 
+>> % and then divide by the number of values.
+>> sum_of_values = 3 + 4 + 5 + 6;
+>> mean_value = sum_of_values / 4
+mean_value =
+     4.5000
+\end{lstlisting}
 
 
-\todo[inline]{Write a about how to use Matlab as a pocket calculator.}
+\subsection{Exercises -- Use Matlab as a pocket calculator}
 
-
-\begin{ex}
-For each line of code below, state what value will be saved in each variable.
-\begin{verbatim}
-a = 1;             % a = 
-b = 1;             % a =    b = 
-c = a + b;         % a =    b =    c = 
-a = b;             % a =    b =    c = 
-b = c;             % a =    b =    c = 
-c = a + b;         % a =    b =    c = 
-a = b;             % a =    b =    c = 
-b = c;             % a =    b =    c = 
-c = a + b;         % a =    b =    c = 
-\end{verbatim}
-\begin{sol}
-\begin{verbatim}
-a = 1;             % a = 1
-b = 1;             % a = 1  b = 1 
-c = a + b;         % a = 1  b = 1  c = 2
-a = b;             % a = 1  b = 1  c = 2
-b = c;             % a = 1  b = 2  c = 2
-c = a + b;         % a = 1  b = 2  c = 3
-a = b;             % a = 2  b = 2  c = 3
-b = c;             % a = 2  b = 3  c = 3
-c = a + b;         % a = 2  b = 3  c = 5
-\end{verbatim}
-\end{sol}
-\end{ex}
-
-
+This section contains a set of exercises related to the material 
+just covered.
+Before you start working on the exercises, try to click on the 
+\verb!hint! and \verb!solution! links that appears in the top 
+right corner in most of the exercises.
+This will take you to a different part of the document, which contains 
+hints and reference solutions for the exercises.
+Please use this if you get stuck on an exercise.
 
 \begin{ex}
 Calculate $5 + 3 \cdot 10$\\
@@ -86,19 +85,19 @@ Calculate 10 - 16/4\\
 Calculate the difference 10 - 16 and divide this difference with 4
 \begin{hint}
 Just write it as you would on a normal calculator, eg. a TI Inspire.
-\begin{verbatim}
+\begin{lstlisting}
 5 + 3 * 10
-\end{verbatim}
+\end{lstlisting}
 \end{hint}
 \begin{secondhint}
 Remember to add parentheses, to control the order of the calculations
-\begin{verbatim}
+\begin{lstlisting}
 (5 + 3) * 10
-\end{verbatim}
+\end{lstlisting}
 \end{secondhint}
 \begin{sol}
 A solution is
-\begin{verbatim}
+\begin{lstlisting}
 >> 3 + 5 * 10
 ans = 
      53
@@ -111,7 +110,7 @@ ans =
 >> (10 - 16) / 4
 ans = 
      -1.5000
-\end{verbatim}
+\end{lstlisting}
 \end{sol}
 \end{ex}
 \known{+, -, *, /}
@@ -121,6 +120,20 @@ Assign the value 2 to the variable $x0$ and hide the answer from this intermedia
 calculation.\\
 Assign the variable $x1$ the value of $3 \cdot x0^2$ + 4 and divide with 4. Check if the answer to
 this calculation is correct (you do not need a pocket calculator to do this).
+\begin{hint}
+The expression to evaluate is simply the value \verb!2!.
+\end{hint}
+\begin{secondhint}
+The value of the expression $3 \cdot 2^2 + 4$ is 16.
+\end{secondhint}
+\begin{sol}
+\begin{lstlisting}
+>> x0 = 2;
+>> x1 = 3*x0^2 + 4
+x1 = 
+     16
+\end{lstlisting}
+\end{sol}
 \end{ex}
 \known{=, \^}
 
@@ -150,13 +163,107 @@ Calculate $\sin(3/4\pi)$, $\cos(3/4 \cdot \pi)$, $\tan(3/4 \cdot \pi)$ and $\cot
 \end{ex}
 \known{sin, cos, tan, cot}
 
+
 \begin{ex}
-Define and print to screen the parameters x and y, where x has to have the values 0, 1,
-2, 3, 4, 5, 6, 7, 8, 9, 10 and y has to have the values 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5,
-5.\\
-Create a Cartesian plot of y against x.
+For each line of code below, state what value will be saved in each variable.
+\begin{lstlisting}
+a = 1;             % a = 1
+b = 1;             % a = 1  b = 1 
+c = a + b;         % a = 1  b = 1  c = 2
+a = b;             % a =    b =    c = 
+b = c;             % a =    b =    c = 
+c = a + b;         % a =    b =    c = 
+a = b;             % a =    b =    c = 
+b = c;             % a =    b =    c = 
+c = a + b;         % a =    b =    c = 
+\end{lstlisting}
+\begin{sol}
+\begin{lstlisting}
+a = 1;             % a = 1
+b = 1;             % a = 1  b = 1 
+c = a + b;         % a = 1  b = 1  c = 2
+a = b;             % a = 1  b = 1  c = 2
+b = c;             % a = 1  b = 2  c = 2
+c = a + b;         % a = 1  b = 2  c = 3
+a = b;             % a = 2  b = 2  c = 3
+b = c;             % a = 2  b = 3  c = 3
+c = a + b;         % a = 2  b = 3  c = 5
+\end{lstlisting}
+\end{sol}
 \end{ex}
-\known{plot}
+
+
+
+
+\subsection{Dealing with lists of values}
+
+In Matlab a variable often contains multiple values arranged as a list of values.
+To store the values 3, 7 and  -2 in a list, the values are surrounded by square brackets 
+\verb![]! and separated by commas, as shown here:
+\begin{lstlisting}
+>> x = [3, 7, -2];
+\end{lstlisting}
+The great thing about saving multiple values in the same variable is when we 
+want to do the same thing to all elements in the variable.
+We can multiply all values in the list by a constant or add a certain value to all 
+elements in the list.
+\begin{lstlisting}
+>> 2*x
+ans = 
+     6    14    -4
+>> x + 2
+ans = 
+     5     9     0
+\end{lstlisting}
+
+We can also try to multiply elements from two lists with each other.
+That however results in the following error message:
+\begin{lstlisting}
+>> y = [1, 1, 2];
+>> x * y
+Error using  * 
+Incorrect dimensions for matrix multiplication. Check that 
+the number of columns in the first matrix matches the number 
+of rows in the second matrix. To perform elementwise 
+multiplication, use '.*'.
+\end{lstlisting}
+
+If we want to multiply each element in the list with itself, we need to use \emph{pointwise} 
+operations, a few examples of such operations are shown here:
+\begin{lstlisting}
+>> x .* y
+ans = 
+     3     7    -4
+\end{lstlisting}
+
+
+
+
+\subsection{Plot of functions}
+
+To plot a function in Matlab, a list of x values and a list of the associated y 
+values are needed.
+To create a list of evenly spaced x values, that covers a given range, the function
+\verb!linspace! can be used.
+The \verb!linspace! function takes three input values, the start value, 
+the end value and the number of elements in the list (which is set to 100 
+by default).
+Lets look at the example of plotting the function $f(x) = \sin(x)$ over the x range 
+from -2 to 7.
+To generate a list of 100 evenly distributed values over the interval from -2 to 7
+and then calculate the value of the sine function applied to each of these values
+run the following code:
+\begin{lstlisting}
+x = linspace(-2, 7);
+y = sin(x);
+\end{lstlisting}
+The next step is to plot the calculated values.
+\begin{lstlisting}
+% Open figure 1 and ensure that it is empty
+figure(1); clf;
+% Plot the function
+plot(x, y);
+\end{lstlisting}
 
 
 \begin{ex}
@@ -168,80 +275,16 @@ Then increase $N$ until you get a smooth plot of the function $y$.
 \end{ex}
 \known{linspace, :}
 
-\begin{ex}
-Define the two row vectors $\vec{v}$ and $\vec{u}$:
-\begin{align*}
-\vec{v} = (1, 2, 3) \qquad \vec{u} = (3, 4, 1)
-\end{align*}
-and determine their 
-sum ($\vec{v} + \vec{u}$),
-difference ($\vec{v} - \vec{u}$),
-dot product ($\vec{v} \cdot \vec{u}$) and
-cross product ($\vec{v} \times \vec{u}$).
-In addition compute the elementwise product, division, power of 2 and 
-the transposed and length of the two vectors.
-\end{ex}
-\known{[\ldots], .*, ./, .\^{}2, .', transpose}
 
 
 \begin{ex}
-Define the two matrices
-\begin{align*}
-\textrm{AMAT} = \begin{pmatrix}
-1 &2 &3	\\
-2 &4 &6	\\
-1 &2 &5
-\end{pmatrix}
-\qquad
-\textrm{BMAT} =
-\begin{pmatrix}
-1 &0 &0	\\
-2 &4 &6	\\
-2 &2 &0
-\end{pmatrix}
-\end{align*}
-And calculate their product AMAT $\cdot$ BMAT, element wise product of AMAT times BMAT, sum
-AMAT+BMAT, transposed, inverted, determinants, sizes, column and row numbers.
+Define and print to screen the parameters x and y, where x has to have the values 0, 1,
+2, 3, 4, 5, 6, 7, 8, 9, 10 and y has to have the values 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5,
+5.\\
+Create a Cartesian plot of y against x.
 \end{ex}
-\known{[,;], \^{}-1, inv, det, size}
+\known{plot}
 
-
-\begin{ex}
-Use the matrices from the previous exercise. What is the value of \verb!AMAT(5)! and why?
-\end{ex}
-
-
-\begin{ex}
-Construct an Identity Matrix $I_{5\times5}$ and a diagonal matrix
-\begin{align*}
-\textrm{CMAT} = \begin{pmatrix}
-2 &0 &0 &0 &0	\\
-0 &4 &0 &0 &0	\\
-0 &0 &7 &0 &0	\\
-0 &0 &0 &0.5 &0	\\
-0 &0 &0 &0 &1	
-\end{pmatrix}
-\end{align*}
-And calculate their product $I_{5 \times 5} \cdot \textrm{CMAT}$.
-\end{ex}
-\known{eye, diag}
-
-
-\begin{ex}
-Solve the set of linear equations
-\begin{align*}
-1	& = 5x + 2y	\\
-0	& = -x + y + 3z + 2v	\\
--10 	& = x + 3y - 4z + v	\\
-0	& = -2x + 3z - 2v 
-\end{align*}
-\end{ex}
-\known{$\backslash$}
-
-
-
-
-\subsection{Plot of functions}
 
 \begin{ex}
 Plot the function $f(x) = \cos(x) + 3 \cdot \sin(3 \cdot x)$
