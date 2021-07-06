@@ -4,10 +4,9 @@
 % !TeX spellcheck = en_GB
 \section{Functions in Matlab}
 
-
-Write the text for this chapter with the exercises in the folder
-\verb!exercises_with_unittests/01_functions! in mind.
-This also means that the unit testing framework should be introduced (only introduce how it is used).
+\todo[inline]{Write the text for this chapter with the exercises in the folder
+\emph{exerciseswithunittests/01functions} in mind.
+This also means that the unit testing framework should be introduced (only introduce how it is used).}
 
 Functions are the building blocks of programming languages.
 We have already used several of the built in functions 
@@ -61,8 +60,107 @@ x2 =
     1.2361
 \end{lstlisting}
 
+Quite a lot is happening in the code above, so lets look at it 
+piece by piece
+\begin{lstlisting}
+function [sol1, sol2] = solve_quadratic(A, B, C)
+\end{lstlisting}
+The first line in the file that contains the function, describe
+the fingerprint or \emph{signature} of the function.
+The function signature describe what the \emph{name} of the function is, 
+which \emph{input} parameters the function accepts and the values that 
+the function will \emph{return}.
+In this case the name of the function is \verb!solve_quadratic!.
+The function takes three input parameters, which are named 
+\verb!A!, \verb!B! and \verb!C!.
+The function returns the two values \verb!sol1! and \verb!sol2!.
+How the return values are calculated is specified in the \emph{body}
+of the function, which is the following three lines.
+\begin{lstlisting}
+D = B^2 - 4 * A * C;
+sol1 = (-B - sqrt(D)) / (2*A);
+sol2 = (-B + sqrt(D)) / (2*A);
+\end{lstlisting}
 
 
+\subsection{Exercises about creating functions}
+
+The exercises for this section is placed in the directory 
+\verb!01_functions! in the git repository, that you are provided access 
+to in class.
+The exercises in the git repository are self checking, which means that you 
+can get instant feedback on the correctness of the provided solution.
+How to work with the exercises, will be shown here. 
+As an example lets look at the first exercise.
+To do so open the file \verb!exercise_01_test.m! in the Matlab editor.
+Then click the \emph{Run Tests} button placed at the top of the screen.
+This will generate output similar to the following
+\begin{lstlisting}[basicstyle=\tiny]
+>> runtests('exercise_01_test')
+Running exercise_01_test
+
+================================================================================
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
+Verification failed in exercise_01_test/test01.
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny]
+    ---------------------
+    Framework Diagnostic:
+    ---------------------
+    verifyEqual failed.
+    --> The numeric values are not equal using "isequaln".
+    --> Failure table:
+            Actual    Expected    Error    RelativeError
+            ______    ________    _____    _____________
+        
+              0          2         -2           -1      
+    
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
+    Actual Value:
+         0
+    Expected Value:
+         2
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny]
+    ------------------
+    Stack Information:
+    ------------------
+    In /home/hemi/Nextcloud/Work/01_teaching_courses/2021-09-01_EMAIP/materials/notes_on_matlab/exercises_with_unittests/01_functions/exercise_01_test.m (test01) at 12
+================================================================================
+.
+Done exercise_01_test
+__________
+
+Failure Summary:
+
+     Name                     Failed  Incomplete  Reason(s)
+    ======================================================================
+     exercise_01_test/test01    X                 Failed by verification.
+
+ans = 
+
+  TestResult with properties:
+
+          Name: 'exercise_01_test/test01'
+        Passed: 0
+        Failed: 1
+    Incomplete: 0
+      Duration: 1.7668
+       Details: [1x1 struct]
+
+Totals:
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
+   0 Passed, 1 Failed (rerun), 0 Incomplete.
+\end{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny]
+   1.7668 seconds testing time.
+\end{lstlisting}
+
+Take a closer look at the lines highlighted in yellow.
+They tell us that an error in the solution of the exercise has been found.
 
 
 
