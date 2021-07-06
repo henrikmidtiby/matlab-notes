@@ -20,12 +20,12 @@ multiple times.
 As an example lets look at how to find the determinant and the two solutions 
 to the following quadratic equation: 
 \begin{align*}
-x^2 + 2x + 4 &= 0 
+x^2 + 2x - 4 &= 0 
 %x^2 + 4x - 1 &= 0 \\
 %4x^2 - 5x + 3 &= 0
 \end{align*}
 This can be achieved with the Matlab code shown below.
-\begin{verbatim}
+\begin{lstlisting}
 >> A = 1; 
 >> B = 2; 
 >> C = -4;
@@ -38,10 +38,35 @@ x1 =
 >> x2 = (-B + sqrt(D)) / (2*A)
 x2 =
     1.2361
-\end{verbatim}
+\end{lstlisting}
+This is manageable if we only need to solve a few quadratic equations.
+However, if we have to solve quadratic equations, it is much better to 
+structure this code in a function, where the values $A$, $B$ and $C$ can be 
+specified when calling the function.
+To create a function, open a new file, enter the following into the file 
+and then save it in the current directory with the name 
+\verb!solve_quadratic.m!.
+\begin{lstlisting}
+function [sol1, sol2] = solve_quadratic(A, B, C)
+D = B^2 - 4 * A * C;
+sol1 = (-B - sqrt(D)) / (2*A);
+sol2 = (-B + sqrt(D)) / (2*A);
+\end{lstlisting}
+we can now solve the same quadratic as before, with the much shorter code
+\begin{lstlisting}
+>> [x1, x2] = solve_quadratic(1, 2, -4)
+x1 =
+   -3.2361
+x2 =
+    1.2361
+\end{lstlisting}
 
 
 
+
+
+
+\subsection{Unplaced exercises}
 
 \begin{ex}
 Define the two row vectors $\vec{v}$ and $\vec{u}$:
