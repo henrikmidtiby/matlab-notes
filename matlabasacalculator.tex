@@ -150,22 +150,74 @@ X & = \frac{-B\pm \sqrt{D}}{2 \cdot A}
 \end{align}
 Use the following values for A, B and C.\\ \noindent
 (A, B, C) = (1, 2, 4), (1, 4, -1), (4, -5, 3), (25, 12, 0), (34, 0, 0) and (0, 2, 0).
+\begin{sol}
+\begin{lstlisting}
+A = 1;
+B = 2; 
+C = 4;
+D = B^2 - 4*A*C;
+Xm = (-B - sqrt(D)) / (2*A)
+Xp = (-B + sqrt(D)) / (2*A)
+\end{lstlisting}
+Which generates the output
+\begin{lstlisting}
+Xm =
+  -1.0000 - 1.7321i
+Xp =
+  -1.0000 + 1.7321i
+\end{lstlisting}
+\end{sol}
 \end{ex}
 \known{sqrt}
 
 \begin{ex}
 Get the value of e and $\pi$ from Matlab.
+\begin{sol}
+\begin{lstlisting}
+exp(1)
+pi
+\end{lstlisting}
+Which generates the output
+\begin{lstlisting}
+ans =
+    2.7183
+ans =
+    3.1416
+\end{lstlisting}
+\end{sol}
 \end{ex}
 \known{exp, pi}
 
 \begin{ex}
-Calculate $\sin(3/4\pi)$, $\cos(3/4 \cdot \pi)$, $\tan(3/4 \cdot \pi)$ and $\cot(3/4 \cdot \pi)$.
+Calculate $\sin(3 \pi / 4)$, $\cos(3 \pi / 4)$, $\tan(3 \pi /4)$ and $\cot(3 \pi / 4)$.
+\begin{sol}
+\begin{lstlisting}
+sin(3 * pi / 4)
+cos(3 * pi / 4)
+tan(3 * pi / 4)
+cot(3 * pi / 4)
+\end{lstlisting}
+Which generates the output
+\begin{lstlisting}
+ans =
+    0.7071
+ans =
+   -0.7071
+ans =
+   -1.0000
+ans =
+   -1.0000
+\end{lstlisting}
+\end{sol}
 \end{ex}
 \known{sin, cos, tan, cot}
 
 
 \begin{ex}
 For each line of code below, state what value will be saved in each variable.
+Do this without running the code.
+Then verify your results by running the code without the semicolons at the 
+end of the lines.
 \begin{lstlisting}
 a = 1;             % a = 1
 b = 1;             % a = 1  b = 1 
@@ -177,6 +229,22 @@ a = b;             % a =    b =    c =
 b = c;             % a =    b =    c = 
 c = a + b;         % a =    b =    c = 
 \end{lstlisting}
+\begin{hint}
+Here we will only look at the first four lines in the provided code.
+\begin{lstlisting}
+a = 1;             % a = 1
+b = 1;             % a = 1  b = 1 
+c = a + b;         % a = 1  b = 1  c = 2
+a = b;             % a =    b =    c = 
+\end{lstlisting}
+To determine the values of $a$, $b$ and $c$ after running 
+the line \verb!a = b!, you have to consider the following things.
+In the line, a (new?!) value is assigned to the variable $a$, the
+two other variables $b$ and $c$ are not changed.
+\begin{lstlisting}
+a = b;             % a = 1  b = 1  c = 2
+\end{lstlisting}
+\end{hint}
 \begin{sol}
 \begin{lstlisting}
 a = 1;             % a = 1
