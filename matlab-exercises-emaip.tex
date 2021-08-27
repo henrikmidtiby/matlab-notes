@@ -15,6 +15,7 @@
 \usepackage{multicol}
 \usepackage{tcolorbox}
 \usepackage{wrapfig}
+\usepackage[font=it,labelfont=bf]{caption}
 \usepackage{color}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -24,18 +25,49 @@
       global,if,otherwise,persistent,return,switch,try,while},
    basicstyle=\footnotesize\ttfamily,
    keywordstyle=\color{blue},
-   commentstyle=\color{dkgreen},
+   commentstyle=\color{black},
    stringstyle=\color{dkgreen},
 %   numbers=left,
-%   numberstyle=\tiny\color{gray},
+   numberstyle=\tiny\color{gray},
 %   stepnumber=3,
 %   numbersep=10pt,
    backgroundcolor=\color{white},
    tabsize=4,
    showspaces=false,
    showstringspaces=false}
+   
 
+% This is a workaround for the lstlinebgrd package
+% https://tex.stackexchange.com/a/451538
+\makeatletter
+\let\old@lstKV@SwitchCases\lstKV@SwitchCases
+\def\lstKV@SwitchCases#1#2#3{}
+\makeatother
+\usepackage{lstlinebgrd}
+\makeatletter
+\let\lstKV@SwitchCases\old@lstKV@SwitchCases
 
+\lst@Key{numbers}{none}{%
+    \def\lst@PlaceNumber{\lst@linebgrd}%
+    \lstKV@SwitchCases{#1}%
+    {none:\\%
+     left:\def\lst@PlaceNumber{\llap{\normalfont
+                \lst@numberstyle{\thelstnumber}\kern\lst@numbersep}\lst@linebgrd}\\%
+     right:\def\lst@PlaceNumber{\rlap{\normalfont
+                \kern\linewidth \kern\lst@numbersep
+                \lst@numberstyle{\thelstnumber}}\lst@linebgrd}%
+    }{\PackageError{Listings}{Numbers #1 unknown}\@ehc}}
+\makeatother
+
+% https://tex.stackexchange.com/a/58543
+\ExplSyntaxOn
+\NewDocumentCommand \lstcolorlines { O{green} m }
+{
+ \clist_if_in:nVT { #2 } { \the\value{lstnumber} }{ \color{#1} }
+}
+\ExplSyntaxOff
+
+\numberwithin{figure}{section}
 \usepackage{exerciseshintsandsolutionsbasedonanswers}
 
 

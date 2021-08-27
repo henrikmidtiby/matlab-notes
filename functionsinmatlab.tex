@@ -4,10 +4,6 @@
 % !TeX spellcheck = en_GB
 \section{Functions in Matlab}
 
-\todo[inline]{Write the text for this chapter with the exercises in the folder
-\emph{exerciseswithunittests/01functions} in mind.
-This also means that the unit testing framework should be introduced (only introduce how it is used).}
-
 Functions are the building blocks of programming languages.
 We have already used several of the built in functions 
 in Matlab (sqrt, linspace, plot, \ldots). 
@@ -45,11 +41,12 @@ specified when calling the function.
 To create a function, open a new file, enter the following into the file 
 and then save it in the current directory with the name 
 \verb!solve_quadratic.m!.
-\begin{lstlisting}
+\begin{lstlisting}[numbers=left]
 function [sol1, sol2] = solve_quadratic(A, B, C)
 D = B^2 - 4 * A * C;
 sol1 = (-B - sqrt(D)) / (2*A);
 sol2 = (-B + sqrt(D)) / (2*A);
+end
 \end{lstlisting}
 we can now solve the same quadratic as before, with the much shorter code
 \begin{lstlisting}
@@ -62,7 +59,7 @@ x2 =
 
 Quite a lot is happening in the code above, so lets look at it 
 piece by piece
-\begin{lstlisting}
+\begin{lstlisting}[numbers=left]
 function [sol1, sol2] = solve_quadratic(A, B, C)
 \end{lstlisting}
 The first line in the file that contains the function, describe
@@ -76,10 +73,14 @@ The function takes three input parameters, which are named
 The function returns the two values \verb!sol1! and \verb!sol2!.
 How the return values are calculated is specified in the \emph{body}
 of the function, which is the following three lines.
-\begin{lstlisting}
+\begin{lstlisting}[numbers=left, firstnumber=2]
 D = B^2 - 4 * A * C;
 sol1 = (-B - sqrt(D)) / (2*A);
 sol2 = (-B + sqrt(D)) / (2*A);
+\end{lstlisting}
+The last line, that contains the keyword \verb!end! marks the end of the function.
+\begin{lstlisting}[numbers=left, firstnumber=5]
+end
 \end{lstlisting}
 
 
@@ -94,17 +95,24 @@ How to work with the exercises, will be shown here.
 As an example lets look at the first exercise.
 To do so open the file \verb!exercise_01_test.m! in the Matlab editor.
 Then click the \emph{Run Tests} button placed at the top of the screen.
-This will generate output similar to the following
-\begin{lstlisting}[basicstyle=\tiny]
+This will generate output similar to what is shown in figure 
+\ref{figUnittestExampleOutput}.
+Take a closer look at the lines highlighted in yellow.
+They tell us that an error in the solution of the exercise has been found.
+Line 5 describe in which test the error occurred.
+Line 17 to 20 lists the actual return value (0) from the function and the expected value (2).
+In Matlab, line 24 appears as a link, which will take you to the location 
+where the error was discovered (keep in mind that this is not necessarily 
+the location of the error!).
+
+
+\begin{figure}[p]
+\begin{lstlisting}[basicstyle=\scriptsize, breaklines=true, numbers=left, linebackgroundcolor={\lstcolorlines[yellow]{5,17,18,19,20,24,48}}]
 >> runtests('exercise_01_test')
 Running exercise_01_test
 
 ================================================================================
-\end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
 Verification failed in exercise_01_test/test01.
-\end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny]
     ---------------------
     Framework Diagnostic:
     ---------------------
@@ -116,14 +124,10 @@ Verification failed in exercise_01_test/test01.
         
               0          2         -2           -1      
     
-\end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
     Actual Value:
          0
     Expected Value:
          2
-\end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny]
     ------------------
     Stack Information:
     ------------------
@@ -147,23 +151,138 @@ ans =
         Passed: 0
         Failed: 1
     Incomplete: 0
-      Duration: 1.7668
+      Duration: 0.3386
        Details: [1x1 struct]
 
 Totals:
-\end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny, backgroundcolor=\color{yellow}]
    0 Passed, 1 Failed (rerun), 0 Incomplete.
+   0.33863 seconds testing time.
 \end{lstlisting}
-\begin{lstlisting}[basicstyle=\tiny]
-   1.7668 seconds testing time.
+\caption{Example output from a failed test.}
+\label{figUnittestExampleOutput}
+\end{figure}
+
+
+To fix the error, we need to modify the file \verb!return_two.m!, which started with the content
+\begin{lstlisting}[numbers=left]
+function res = return_two()
+
+% Modify the line below so the function returns the value 2.
+res = 0;
+
+end
 \end{lstlisting}
+The fix consists of changing the 0 in line 4 with a 2; line
+4 should now look like:
+\begin{lstlisting}[numbers=left, firstnumber = 4]
+res = 2;
+\end{lstlisting}
+To check that the fix, actually solves the problem, lets run the 
+test again.
+The output of the test run is shown in figure \ref{figExampleOutputFromAPassedTest}.
+Line 20 tells us that all test have passed.
+This usually means that you can proceed to the next exercise.
 
-Take a closer look at the lines highlighted in yellow.
-They tell us that an error in the solution of the exercise has been found.
+\begin{figure}
+\begin{lstlisting}[basicstyle=\scriptsize, breaklines=true, numbers=left, linebackgroundcolor={\lstcolorlines[yellow]{20}}]
+>> runtests('exercise_01_test')
+Running exercise_01_test
+.
+Done exercise_01_test
+__________
+
+
+ans = 
+
+  TestResult with properties:
+
+          Name: 'exercise_01_test/test01'
+        Passed: 1
+        Failed: 0
+    Incomplete: 0
+      Duration: 0.0166
+       Details: [1x1 struct]
+
+Totals:
+   1 Passed, 0 Failed, 0 Incomplete.
+   0.016614 seconds testing time.
+\end{lstlisting}
+\caption{Example output from a passed test.}
+\label{figExampleOutputFromAPassedTest}
+\end{figure}
+
+In the \verb!01_functions! directory there is also the file \verb!run_all_tests.m!.
+By running the \verb!run_all_tests.m! matlab script, you get a list of all the 
+errors that are being found by the set of tests.
+A part of the generated output is shown in figure \ref{figRunAllTestsOutput}.
+The last part of the \verb!run_all_tests.m! Matlab script will ask you to provide an 
+id. Feel free to choose what ever id you want. If the id is not \verb!ukendt!, 
+the test results will be sent to a server so that Henrik can monitor the progress 
+of the class.
+
+\begin{figure}
+\begin{lstlisting}[basicstyle=\scriptsize]
+>> run_all_tests
+
+Failure Summary:
+
+     Name                     Failed  Incomplete  Reason(s)
+    ======================================================================
+     exercise_01_test/test01    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_02_test/test01    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_03_test/test01    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_03_test/test02    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_03_test/test03    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_04_test/test01    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_04_test/test02    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_04_test/test03    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_05_test/test01    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_05_test/test02    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_06_test/test01    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_06_test/test02    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_06_test/test03    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_07_test/test01    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_07_test/test02    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_07_test/test03    X                 Failed by verification.
+    ----------------------------------------------------------------------
+     exercise_08_test/test01    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_08_test/test02    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_08_test/test03    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_09_test/test01    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_09_test/test02    X         X       Errored.
+    ----------------------------------------------------------------------
+     exercise_09_test/test03    X         X       Errored.
+Number of passed unittests:       1
+Number of failed unittests:      22
+Number of incomplete unittests:  13
+Sending data to server.
+\end{lstlisting}
+\caption{Output from run all tests.}
+\label{figRunAllTestsOutput}
+\end{figure}
 
 
 
+\newpage
 \subsection{Unplaced exercises}
 
 \begin{ex}
@@ -236,9 +355,5 @@ Solve the set of linear equations
 \end{ex}
 \known{$\backslash$}
 
-
-
-
-\subsection{Creating functions}
 
 
