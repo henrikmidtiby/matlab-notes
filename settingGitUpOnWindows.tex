@@ -2,18 +2,19 @@
 % !TeX program = pdfLaTeX
 % !TeX root = matlab-exercises-emaip.tex
 % !TeX spellcheck = en_GB
-\section{Setting git up on Windows}
+\section{Workflow in git}
 
 In this section it is explained how to set up git on 
 a Windows computer.
-This is also described in this \href{https://tekvideo.sdu.dk/t/henrikmidtiby/E-MAIP-2020/2020/1/blok04/4}{video}.
+To install git on MacOS or Linux similar steps should be taken.
+This is also described in this \href{https://tekvideo.sdu.dk/t/henrikmidtiby/E-MAIP-2021/2021/1/blok04/3}{video}.
 
 The steps are as follows:
 \begin{enumerate}
-\item		Download and install \emph{Git for Windows} from \url{https://git-scm.com/}
-\item		Open \emph{Git Bash} and identify yourself to git
-\item		Generate an ssh key
-\item 	Add the generated ssh key to \url{https://gitlab.sdu.dk}
+\item	Download and install \emph{Git for Windows} from \url{https://git-scm.com/}
+\item	Open \emph{Git Bash} and identify yourself to git
+\item	Generate an ssh key
+\item	Add the generated ssh key to \url{https://gitlab.sdu.dk}
 \end{enumerate}
 
 \subsection{Download and installation of \emph{Git for Windows}}
@@ -49,7 +50,7 @@ $ git config --global user.email "hemi@mmmi.sdu.dk"
 
 To work efficiently with git on remote servers like \url{https://gitlab.sdu.dk} or \url{https://github.com}, you need to generate 
 an ssh key.
-In Git Bash it is done with the command.
+In Git Bash it is done with the command\footnote{See a guide for generating ssh keys on Windows, Mac and Linux here: \url{https://inchoo.net/dev-talk/how-to-generate-ssh-keys-for-git-authorization/}}.
 \begin{verbatim}
 ssh-keygen -t rsa
 \end{verbatim}
