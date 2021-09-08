@@ -71,6 +71,9 @@
 \usepackage{exerciseshintsandsolutionsbasedonanswers}
 
 
+\newcommand{\known}[1]{\todo[inline, color=green!20, nolist]{New commands: \texttt{#1}}}
+
+
 \newcommand{\moved}{\todo[inline]{The exercise above has been moved to matlab with unittests.}}
 
 
@@ -98,7 +101,7 @@
 \title{Matlab notes for E-MAIP 2021}
 \date{\today}
 
-%\includeonly{matlabasacalculator}
+%\includeonly{linearalgebra}
 
 \begin{document}
 
@@ -140,6 +143,7 @@ but not always what you want.
 \include{settingGitUpOnWindows}
 \include{linearalgebra}
 \include{constrolstructures}
+\include{randomNumberGeneration}
 \include{matlabIntroduction}
 \include{plotting}
 \include{complexNumbers}
@@ -154,7 +158,6 @@ but not always what you want.
 \include{solveSecondOrderDiffEquationsNumerically}
 \include{numericalRootFinding}
 \include{plottingExperimentalData}
-\include{randomNumberGeneration}
 
 
 

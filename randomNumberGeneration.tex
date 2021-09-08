@@ -73,3 +73,28 @@ b = -30
      14
 \end{lstlisting}
  
+ 
+ 
+
+\begin{ex}
+Enter the following code in matlab and explain what it is doing.
+\begin{lstlisting}
+number = randi(100);
+fprintf("I have chosen a number between 1 and 100, can you guess it?\n");
+guess = input("Enter your guess: ");
+while guess ~= number
+    if(guess < number)
+        fprintf("Your guess is below the number I selected.\n");
+    else
+        fprintf("Your guess is above the number I selected.\n");
+    end
+    guess = input("Enter your guess: ");
+end
+fprintf("Congratulations you guessed the number!\n");
+\end{lstlisting}
+\end{ex}
+ 
+ 
+ 
+
+ 
